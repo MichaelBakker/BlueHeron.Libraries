@@ -1,9 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
+	<PropertyGroup>
+		<RootNamespace>BlueHeron</RootNamespace>
+		<TargetFramework>net7.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
+		<RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>bb.snk</AssemblyOriginatorKeyFile>
+		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+		<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+		<WarningLevel>1</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NoWarn />
+		<CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+		<Optimize>true</Optimize>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+		<DefineConstants>DEBUG</DefineConstants>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<DocumentationFile>BlueHeron.Collections.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn />
+		<PlatformTarget>x64</PlatformTarget>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<DocumentationFile>BlueHeron.Collections.xml</DocumentationFile>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Folder Include="Util\" />
+	</ItemGroup>
 </Project>
