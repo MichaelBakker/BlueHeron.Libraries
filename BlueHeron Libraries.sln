@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32721.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueHeron.Collections", "BlueHeron.Collections\BlueHeron.Collections.csproj", "{0BEF86FA-37A9-447D-9FA6-6385DCD8467D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BEF86FA-37A9-447D-9FA6-6385DCD8467D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BEF86FA-37A9-447D-9FA6-6385DCD8467D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BEF86FA-37A9-447D-9FA6-6385DCD8467D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BEF86FA-37A9-447D-9FA6-6385DCD8467D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA9F9449-1D66-4BA5-97D5-9AFC29D4455F}
+	EndGlobalSection
+EndGlobal
