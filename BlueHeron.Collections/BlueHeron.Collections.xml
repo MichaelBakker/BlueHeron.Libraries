@@ -748,30 +748,6 @@
             Moves the enumerator to the beginning of the list, setting <see cref="P:BlueHeron.Collections.Generic.FastList`1.Enumerator.Current"/> to null.
             </summary>
         </member>
-        <member name="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventHandler`1">
-            <summary>
-            Event handler for change notifications.
-            </summary>
-            <typeparam name="T">The type of the items in the collection</typeparam>
-            <param name="e">A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> implementation</param>
-        </member>
-        <member name="T:BlueHeron.Collections.Generic.IObservableCollection`1">
-            <summary>
-            Interface definition for readonly observable collections.
-            Inherits from <see cref="T:System.Collections.Generic.IReadOnlyCollection`1"/>.
-            </summary>
-            <typeparam name="T">The type of the object in the collection</typeparam>
-        </member>
-        <member name="E:BlueHeron.Collections.Generic.IObservableCollection`1.CollectionChanged">
-            <summary>
-            Event is fired when the collection has changed or when an item in the collection has changed.
-            </summary>
-        </member>
-        <member name="P:BlueHeron.Collections.Generic.IObservableCollection`1.SyncRoot">
-            <summary>
-            Object, needed to ensure thread safety.
-            </summary>
-        </member>
         <member name="T:BlueHeron.Collections.Generic.MappingCollection`3">
             <summary>
             Object that maps indexes to names and vice versa, and maps indexes to values.
@@ -887,70 +863,6 @@
             <param name="key">The <typeparamref name="TIndex"/></param>
             <returns>True if the operation was successful</returns>
         </member>
-        <member name="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1">
-            <summary>
-            Event arguments for the <see cref="T:BlueHeron.Collections.Generic.ObservableDictionary`2"/>
-            </summary>
-            <typeparam name="T">The type of the object in the collection</typeparam>
-        </member>
-        <member name="F:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Action">
-            <summary>
-            The <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> that was performed.
-            </summary>
-        </member>
-        <member name="F:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.NewItem">
-            <summary>
-            The new item.
-            </summary>
-        </member>
-        <member name="F:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.OldItem">
-            <summary>
-            The old item.
-            </summary>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.#ctor(System.Collections.Specialized.NotifyCollectionChangedAction,`0,`0)">
-            <summary>
-            Creates a new NotifyCollectionChangedEventArgs.
-            </summary>
-            <param name="action">The <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> that was performed</param>
-            <param name="newItem">The new item</param>
-            <param name="oldItem">The old item</param>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.ToStandardEventArgs">
-            <summary>
-            Converts this object to a <see cref="T:System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> object.
-            </summary>
-            <returns>A <see cref="T:System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> object</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">Invalid <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> value (i.e. <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Move"/>)</exception>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Add(`0)">
-            <summary>
-            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents an <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Add"/> operation.
-            </summary>
-            <param name="newItem">The new item</param>
-            <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Remove(`0)">
-            <summary>
-            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents a <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Remove"/> operation.
-            </summary>
-            <param name="oldItem">The old item</param>
-            <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Replace(`0,`0)">
-            <summary>
-            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents a <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Replace"/> operation.
-            </summary>
-            <param name="oldItem">The old item</param>
-            <param name="newItem">The new item</param>
-            <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Reset">
-            <summary>
-            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents an <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Reset"/> operation.
-            </summary>
-            <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
-        </member>
         <member name="T:BlueHeron.Collections.Generic.NumberCollection`1">
             <summary>
             A <see cref="T:BlueHeron.Collections.Generic.FastList`1"/> implementation where <typeparamref name="T"/> is an <see cref="T:System.Numerics.INumber`1"/> implementation.
@@ -1019,6 +931,94 @@
             Stores the given object in the pool.
             </summary>
             <param name="item">The object to store</param>
+        </member>
+        <member name="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventHandler`1">
+            <summary>
+            Event handler for change notifications.
+            </summary>
+            <typeparam name="T">The type of the items in the collection</typeparam>
+            <param name="e">A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> implementation</param>
+        </member>
+        <member name="T:BlueHeron.Collections.Generic.IObservableCollection`1">
+            <summary>
+            Interface definition for readonly observable collections.
+            Inherits from <see cref="T:System.Collections.Generic.IReadOnlyCollection`1"/>.
+            </summary>
+            <typeparam name="T">The type of the object in the collection</typeparam>
+        </member>
+        <member name="E:BlueHeron.Collections.Generic.IObservableCollection`1.CollectionChanged">
+            <summary>
+            Event is fired when the collection has changed or when an item in the collection has changed.
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.IObservableCollection`1.SyncRoot">
+            <summary>
+            Object, needed to ensure thread safety.
+            </summary>
+        </member>
+        <member name="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1">
+            <summary>
+            Event arguments for the <see cref="T:BlueHeron.Collections.Generic.ObservableDictionary`2"/>
+            </summary>
+            <typeparam name="T">The type of the object in the collection</typeparam>
+        </member>
+        <member name="F:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Action">
+            <summary>
+            The <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> that was performed.
+            </summary>
+        </member>
+        <member name="F:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.NewItem">
+            <summary>
+            The new item.
+            </summary>
+        </member>
+        <member name="F:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.OldItem">
+            <summary>
+            The old item.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.#ctor(System.Collections.Specialized.NotifyCollectionChangedAction,`0,`0)">
+            <summary>
+            Creates a new NotifyCollectionChangedEventArgs.
+            </summary>
+            <param name="action">The <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> that was performed</param>
+            <param name="newItem">The new item</param>
+            <param name="oldItem">The old item</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.ToStandardEventArgs">
+            <summary>
+            Converts this object to a <see cref="T:System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> object.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> object</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Invalid <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> value (i.e. <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Move"/>)</exception>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Add(`0)">
+            <summary>
+            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents an <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Add"/> operation.
+            </summary>
+            <param name="newItem">The new item</param>
+            <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Remove(`0)">
+            <summary>
+            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents a <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Remove"/> operation.
+            </summary>
+            <param name="oldItem">The old item</param>
+            <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Replace(`0,`0)">
+            <summary>
+            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents a <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Replace"/> operation.
+            </summary>
+            <param name="oldItem">The old item</param>
+            <param name="newItem">The new item</param>
+            <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Reset">
+            <summary>
+            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents an <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Reset"/> operation.
+            </summary>
+            <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
         </member>
         <member name="T:BlueHeron.Collections.Generic.ObservableDictionary`2">
             <summary>
