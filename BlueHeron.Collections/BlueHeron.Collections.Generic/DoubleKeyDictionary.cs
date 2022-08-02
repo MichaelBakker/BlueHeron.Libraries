@@ -146,7 +146,7 @@ namespace BlueHeron.Collections.Generic
 		/// <summary>
 		/// Returns true, if both dictionaries are equal.
 		/// </summary>
-		/// <param name="other">The other <see cref="DoubleKeyDictionary{K1, K2, TValue}"/></param>
+		/// <param name="obj">The object to compare to</param>
 		/// <returns>True, if both dictionaries are equal</returns>
 		public override bool Equals(object obj)
 		{

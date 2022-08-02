@@ -109,7 +109,7 @@ namespace BlueHeron.Collections.Generic
         /// <summary>
         /// Determines if a mapping exists for the given <typeparamref name="TName"/>.
         /// </summary>
-        /// <param name="id">The <typeparamref name="TName"/></param>
+        /// <param name="name">The <typeparamref name="TName"/></param>
         /// <returns>True if a mapping exists for the given <typeparamref name="TName"/>, else false</returns>
         public bool HasItem(TName name)
         {
@@ -174,7 +174,7 @@ namespace BlueHeron.Collections.Generic
         /// <summary>
         /// Tries to get the <typeparamref name="TValue"/> with the given <typeparamref name="TName"/>.
         /// </summary>
-        /// <param name="id">The <typeparamref name="TName"/></param>
+        /// <param name="name">The <typeparamref name="TName"/></param>
         /// <param name="data">The <typeparamref name="TValue"/> if it exists, else null</param>
         /// <returns>True if the operation was successful</returns>
         public bool TryGetItem(TName name, out TValue data)

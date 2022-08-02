@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace BlueHeron.Collections
 {
+	/// <summary>
+	/// Extension functions for collections.
+	/// </summary>
 	public static class Extensions
 	{
 		#region Collections
@@ -14,7 +17,7 @@ namespace BlueHeron.Collections
 		/// <typeparam name="T">The type of the elements.</typeparam>
 		/// <param name="list">The respective list.</param>
 		/// <returns>The internal array of the list.</returns>
-		public static T[] GetInternalArray<T>(this List<T> list)
+		public static T[] GetArray<T>(this List<T> list)
 		{
 			return list.ToArray();
 		}

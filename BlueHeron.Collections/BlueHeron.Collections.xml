@@ -55,7 +55,7 @@
             <summary>
             Returns true, if both dictionaries are equal.
             </summary>
-            <param name="other">The other <see cref="T:BlueHeron.Collections.Generic.DoubleKeyDictionary`3"/></param>
+            <param name="obj">The object to compare to</param>
             <returns>True, if both dictionaries are equal</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.DoubleKeyDictionary`3.GetEnumerator">
@@ -459,6 +459,7 @@
             The search is started from the given index forwards.
             If no matching item is found, -1 is returned.
             </summary>
+            <param name="startIndex">The index at which to start searching</param>
             <param name="match">The <see cref="T:System.Predicate`1"/> with which to find the item</param>
             <returns>The index of the item in the list if it exists, else -1</returns>
         </member>
@@ -468,6 +469,8 @@
             The search is started from the given index forwards, searching the given number of items.
             If no matching item is found, -1 is returned.
             </summary>
+            <param name="startIndex">The index at which to start searching</param>
+            <param name="count">The number of items to search through</param>
             <param name="match">The <see cref="T:System.Predicate`1"/> with which to find the item</param>
             <returns>The index of the item in the list if it exists, else -1</returns>
         </member>
@@ -493,6 +496,7 @@
             The search is started from the given index forwards, searching the given number of items.
             If no matching item is found, -1 is returned.
             </summary>
+            <param name="startIndex">The index at which to start searching</param>
             <param name="match">The <see cref="T:System.Predicate`1"/> with which to find the item</param>
             <returns>The index of the item in the list if it exists, else -1</returns>
         </member>
@@ -502,6 +506,8 @@
             The search is started from the given index forwards, searching the given number of items.
             If no matching item is found, -1 is returned.
             </summary>
+            <param name="startIndex">The index at which to start searching</param>
+            <param name="count">The number of items to search through</param>
             <param name="match">The <see cref="T:System.Predicate`1"/> with which to find the item</param>
             <returns>The index of the item in the list if it exists, else -1</returns>
         </member>
@@ -521,7 +527,7 @@
             <summary>
             Gets the internal array used to hold data.
             </summary>
-            <returns></returns>
+            <returns>An array of items of type <typeparamref name="T"/></returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.GetRange(System.Int32,System.Int32)">
             <summary>
@@ -547,9 +553,10 @@
         <member name="M:BlueHeron.Collections.Generic.FastList`1.IndexOf(`0,System.Int32)">
             <summary>
             Returns the sourceIndex in this list of the first instance of the given item.
-            The search is started at the given index
+            The search is started at the given index.
             </summary>
             <param name="item">The item to check</param>
+            <param name="index">The index at which to start searching</param>
             <returns>The zero-based sourceIndex of the first occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.IndexOf(`0,System.Int32,System.Int32)">
@@ -558,6 +565,8 @@
             The search is started at the given index and searches the given number of items.
             </summary>
             <param name="item">The item to check</param>
+            <param name="index">The index at which to start searching</param>
+            <param name="count">The number of items to search through</param> 
             <returns>The zero-based sourceIndex of the first occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Insert(System.Int32,`0)">
@@ -591,9 +600,10 @@
         <member name="M:BlueHeron.Collections.Generic.FastList`1.LastIndexOf(`0,System.Int32)">
             <summary>
             Returns the sourceIndex in this list of the last instance of the given item.
-            The search is started at the given index
+            The search is started at the given index.
             </summary>
             <param name="item">The item to check</param>
+            <param name="index">The index at which to start searching</param>
             <returns>The zero-based sourceIndex of the last occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.LastIndexOf(`0,System.Int32,System.Int32)">
@@ -602,6 +612,8 @@
             The search is started at the given index and searches the given number of items.
             </summary>
             <param name="item">The item to check</param>
+            <param name="index">The index at which to start searching</param>
+            <param name="count">The number of items to search through</param>
             <returns>The zero-based sourceIndex of the last occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Remove(`0)">
@@ -653,11 +665,15 @@
             <summary>
             Sorts the elements in the list using the given <see cref="T:System.Collections.Generic.IComparer`1"/>.
             </summary>
+            <param name="comparer">The <see cref="T:System.Collections.Generic.IComparer`1"/> to use</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Sort(System.Int32,System.Int32,System.Collections.Generic.IComparer{`0})">
             <summary>
             Sorts the elements in the list using the given <see cref="T:System.Collections.Generic.IComparer`1"/>, starting from the given index and sorting the given number of items.
             </summary>
+            <param name="index">The index at which to start sorting</param>
+            <param name="count">The number of items to sort</param>
+            <param name="comparer">The <see cref="T:System.Collections.Generic.IComparer`1"/> to use</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.ToArray">
             <summary>
@@ -822,7 +838,7 @@
             <summary>
             Determines if a mapping exists for the given <typeparamref name="TName"/>.
             </summary>
-            <param name="id">The <typeparamref name="TName"/></param>
+            <param name="name">The <typeparamref name="TName"/></param>
             <returns>True if a mapping exists for the given <typeparamref name="TName"/>, else false</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.MappingCollection`3.Remove(`0)">
@@ -851,7 +867,7 @@
             <summary>
             Tries to get the <typeparamref name="TValue"/> with the given <typeparamref name="TName"/>.
             </summary>
-            <param name="id">The <typeparamref name="TName"/></param>
+            <param name="name">The <typeparamref name="TName"/></param>
             <param name="data">The <typeparamref name="TValue"/> if it exists, else null</param>
             <returns>True if the operation was successful</returns>
         </member>
@@ -1260,7 +1276,12 @@
             <param name="serializationInfo">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to use</param>
             <param name="streamingContext">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> to use</param>
         </member>
-        <member name="M:BlueHeron.Collections.Extensions.GetInternalArray``1(System.Collections.Generic.List{``0})">
+        <member name="T:BlueHeron.Collections.Extensions">
+            <summary>
+            Extension functions for collections.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Extensions.GetArray``1(System.Collections.Generic.List{``0})">
             <summary>
             Gets the internal array of a <see cref="T:System.Collections.Generic.List`1"/>.
             </summary>
@@ -1357,6 +1378,8 @@
             <summary>
             Advances to the next token. A separator character can be specified, which overrides the one previously set. 
             </summary>
+            <param name="allowQuotedToken">Allow quoted tokens</param>
+            <param name="separator">The separator character</param>
             <returns>True if next token was found, false if at end of string</returns> 
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.Initialize(System.String,System.Char,System.Char)">
