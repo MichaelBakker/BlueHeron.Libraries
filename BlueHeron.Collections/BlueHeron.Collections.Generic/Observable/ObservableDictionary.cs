@@ -138,7 +138,7 @@ namespace BlueHeron.Collections.Generic
 						LastChange = NotifyCollectionChangedEventArgs<KeyValuePair<TKey, TValue>>.Replace(
 							new KeyValuePair<TKey, TValue>(key, value),
 							new KeyValuePair<TKey, TValue>(key, oldValue));
-						_ = OnChanged();
+						OnChanged();
 					}
 					else
 					{
@@ -205,7 +205,7 @@ namespace BlueHeron.Collections.Generic
 			{
 				LastChange = NotifyCollectionChangedEventArgs<KeyValuePair<TKey, TValue>>.Add(new KeyValuePair<TKey, TValue>(key, value));
 				mDictionary.Add(key, value);
-				_ = OnChanged();
+				OnChanged();
 			}
 		}
 
@@ -227,7 +227,7 @@ namespace BlueHeron.Collections.Generic
 			{
 				mDictionary.Clear();
 				LastChange = NotifyCollectionChangedEventArgs<KeyValuePair<TKey, TValue>>.Reset();
-				_ = OnChanged();
+				OnChanged();
 			}
 		}
 
@@ -297,7 +297,8 @@ namespace BlueHeron.Collections.Generic
 				if (mDictionary.Remove(key, out var value))
 				{
 					LastChange = NotifyCollectionChangedEventArgs<KeyValuePair<TKey, TValue>>.Remove(new KeyValuePair<TKey, TValue>(key, value));
-					return OnChanged();
+					OnChanged();
+					return true;
 				}
 				return false;
 			}
@@ -319,7 +320,8 @@ namespace BlueHeron.Collections.Generic
 						if (mDictionary.Remove(item.Key, out var value2))
 						{
 							LastChange = NotifyCollectionChangedEventArgs<KeyValuePair<TKey, TValue>>.Remove(new KeyValuePair<TKey, TValue>(item.Key, value2));
-							return OnChanged();
+							OnChanged();
+							return true;
 						}
 					}
 				}
@@ -345,7 +347,8 @@ namespace BlueHeron.Collections.Generic
 					LastChange = NotifyCollectionChangedEventArgs<KeyValuePair<TKey, TValue>>.Replace(
 							new KeyValuePair<TKey, TValue>(newKey, newValue),
 							new KeyValuePair<TKey, TValue>(oldKey, oldValue));
-					_ = OnChanged();
+					OnChanged();
+					return true;
 				}				
 				return false;
 			}
@@ -381,11 +384,9 @@ namespace BlueHeron.Collections.Generic
 		/// <summary>
 		/// Invokes the <see cref="CollectionChanged"/> event.
 		/// </summary>
-		private bool OnChanged()
+		private void OnChanged()
 		{
 			CollectionChanged?.Invoke(LastChange);
-
-			return true;
 		}
 
 		#endregion

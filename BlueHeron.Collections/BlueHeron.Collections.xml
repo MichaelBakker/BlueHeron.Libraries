@@ -1256,14 +1256,14 @@
             <typeparam name="T">The type of the value stored in the <see cref="T:BlueHeron.Collections.Generic.StateTableEntry"/></typeparam>
             <param name="key">The key under which the item was stored</param>
             <returns>The value with type <typeparamref name="T"/></returns>
-            <exception cref="T:System.TypeInitializationException">The requested type is not the same as the stored type</exception>
         </member>
-        <member name="M:BlueHeron.Collections.Generic.StateTable.TryGetValue``1(System.String,``0@)">
+        <member name="M:BlueHeron.Collections.Generic.StateTable.TryGetValue``1(System.String,System.Boolean,``0@)">
             <summary>
             Tries to get the typed value of the <see cref="T:BlueHeron.Collections.Generic.StateTableEntry"/> with the given key.
             </summary>
             <typeparam name="T">The type of the value stored in the <see cref="T:BlueHeron.Collections.Generic.StateTableEntry"/></typeparam>
             <param name="key">The key under which the item was stored</param>
+            <param name="validateType">Determines whether the stored type should match the requested type</param>
             <param name="value">The value with type <typeparamref name="T"/>, if the operation was successful</param>
             <returns>Boolean, true if the typed value could be retrieved</returns>
         </member>

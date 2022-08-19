@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -132,15 +133,9 @@ namespace BlueHeron.Collections.Generic
 		/// <typeparam name="T">The type of the value stored in the <see cref="StateTableEntry"/></typeparam>
 		/// <param name="key">The key under which the item was stored</param>
 		/// <returns>The value with type <typeparamref name="T"/></returns>
-		/// <exception cref="TypeInitializationException">The requested type is not the same as the stored type</exception>
 		public T GetValue<T>(string key)
 		{
-			var entry = this[key];
-			if (Type.GetType(entry.ValueTypeName).IsAssignableTo(typeof(T)))
-			{
-				return (T)entry.Value;
-			}
-			throw new TypeInitializationException(entry.ValueTypeName, null);
+			return (T)this[key].Value;
 		}
 
 		/// <summary>
@@ -148,14 +143,23 @@ namespace BlueHeron.Collections.Generic
 		/// </summary>
 		/// <typeparam name="T">The type of the value stored in the <see cref="StateTableEntry"/></typeparam>
 		/// <param name="key">The key under which the item was stored</param>
+		/// <param name="validateType">Determines whether the stored type should match the requested type</param>
 		/// <param name="value">The value with type <typeparamref name="T"/>, if the operation was successful</param>
 		/// <returns>Boolean, true if the typed value could be retrieved</returns>
-		public bool TryGetValue<T>(string key, out T value)
+		public bool TryGetValue<T>(string key, bool validateType, [MaybeNullWhen(false)] out T value)
 		{
 			if (ContainsKey(key))
 			{
 				var entry = this[key];
-				if (Type.GetType(entry.ValueTypeName).IsAssignableTo(typeof(T)))
+				if (validateType)
+				{
+					if (Type.GetType(entry.ValueTypeName).IsAssignableTo(typeof(T)))
+					{
+						value = (T)entry.Value;
+						return true;
+					}
+				}
+				else
 				{
 					value = (T)entry.Value;
 					return true;
