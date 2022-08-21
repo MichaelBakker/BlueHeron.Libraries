@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 namespace BlueHeron.Collections.Generic
 {
 	/// <summary>
-	/// Strongly-typed <see cref="Hashtable">Hashtable</see>.
+	/// An observable dictionary of <see cref="StateTableEntry"/> objects, which allow for a collection of different strongly typed objects (strings, numbers, enums, objects, ...).
 	/// </summary>
 	public class StateTable : ObservableDictionary<string, StateTableEntry>, ICloneable, IEquatable<StateTable>
 	{

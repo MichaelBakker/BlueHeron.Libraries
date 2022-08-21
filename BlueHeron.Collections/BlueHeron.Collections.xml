@@ -1193,7 +1193,7 @@
         </member>
         <member name="T:BlueHeron.Collections.Generic.StateTable">
             <summary>
-            Strongly-typed <see cref="T:System.Collections.Hashtable">Hashtable</see>.
+            An observable dictionary of <see cref="T:BlueHeron.Collections.Generic.StateTableEntry"/> objects, which allow for a collection of different strongly typed objects (strings, numbers, enums, objects, ...).
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.StateTable.Add``1(System.String,``0,System.Boolean)">
