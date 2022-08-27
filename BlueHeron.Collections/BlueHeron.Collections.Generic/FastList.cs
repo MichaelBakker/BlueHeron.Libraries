@@ -22,6 +22,52 @@ namespace BlueHeron.Collections.Generic
 
 		#endregion
 
+		#region Construction
+
+		/// <summary>
+		/// Creates a new, empty list.
+		/// </summary>
+		public FastList()
+		{
+			Items = mEmpty;
+		}
+
+		/// <summary>
+		/// Creates a new FastList, based on the given <see cref="IEnumerable{T}"/>.
+		/// </summary>
+		/// <param name="collection">The <see cref="IEnumerable{T}"/></param>
+		public FastList(IEnumerable<T> collection)
+		{
+			if (collection is ICollection<T> is2)
+			{
+				var count = is2.Count;
+				Items = new T[count];
+				is2.CopyTo(Items, 0);
+				mSize = count;
+			}
+			else
+			{
+				mSize = 0;
+				Items = new T[mDefaultCapacity];
+				using var enumerator = collection.GetEnumerator();
+				while (enumerator.MoveNext())
+				{
+					Add(enumerator.Current);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Creates a new, empty list with the given capacity.
+		/// </summary>
+		/// <param name="capacity">The capacity</param>
+		public FastList(int capacity)
+		{
+			Items = new T[capacity];
+		}
+
+		#endregion
+
 		#region Properties
 
 		/// <summary>
@@ -75,52 +121,6 @@ namespace BlueHeron.Collections.Generic
 		{
 			get => Items[index];
 			set => Items[index] = value;
-		}
-
-		#endregion
-
-		#region Construction
-
-		/// <summary>
-		/// Creates a new, empty list.
-		/// </summary>
-		public FastList()
-		{
-			Items = mEmpty;
-		}
-
-		/// <summary>
-		/// Creates a new FastList, based on the given <see cref="IEnumerable{T}"/>.
-		/// </summary>
-		/// <param name="collection">The <see cref="IEnumerable{T}"/></param>
-		public FastList(IEnumerable<T> collection)
-		{
-			if (collection is ICollection<T> is2)
-			{
-				var count = is2.Count;
-				Items = new T[count];
-				is2.CopyTo(Items, 0);
-				mSize = count;
-			}
-			else
-			{
-				mSize = 0;
-				Items = new T[mDefaultCapacity];
-				using var enumerator = collection.GetEnumerator();
-				while (enumerator.MoveNext())
-				{
-					Add(enumerator.Current);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Creates a new, empty list with the given capacity.
-		/// </summary>
-		/// <param name="capacity">The capacity</param>
-		public FastList(int capacity)
-		{
-			Items = new T[capacity];
 		}
 
 		#endregion

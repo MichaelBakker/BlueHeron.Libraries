@@ -274,6 +274,23 @@
             </summary>
             <typeparam name="T">The type of the elements in the list</typeparam>
         </member>
+        <member name="M:BlueHeron.Collections.Generic.FastList`1.#ctor">
+            <summary>
+            Creates a new, empty list.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.FastList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates a new FastList, based on the given <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
+            </summary>
+            <param name="collection">The <see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.FastList`1.#ctor(System.Int32)">
+            <summary>
+            Creates a new, empty list with the given capacity.
+            </summary>
+            <param name="capacity">The capacity</param>
+        </member>
         <member name="P:BlueHeron.Collections.Generic.FastList`1.Capacity">
             <summary>
             Gets or sets the capacity of this list.
@@ -300,23 +317,6 @@
             </summary>
             <param name="index">The sourceIndex of the element</param>
             <returns>The element</returns>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.FastList`1.#ctor">
-            <summary>
-            Creates a new, empty list.
-            </summary>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.FastList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
-            <summary>
-            Creates a new FastList, based on the given <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
-            </summary>
-            <param name="collection">The <see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.FastList`1.#ctor(System.Int32)">
-            <summary>
-            Creates a new, empty list with the given capacity.
-            </summary>
-            <param name="capacity">The capacity</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Add(`0)">
             <summary>
