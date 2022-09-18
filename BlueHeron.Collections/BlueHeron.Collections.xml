@@ -1034,7 +1034,7 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableDictionary`2.#ctor">
             <summary>
-            Creates a new, mEmpty dictionary.
+            Creates a new, empty dictionary.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableDictionary`2.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{`0,`1}})">
@@ -1045,7 +1045,7 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableDictionary`2.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            Creates a new, mEmpty dictionary using the given <see cref="P:BlueHeron.Collections.Generic.ObservableDictionary`2.StreamingContext"/>.
+            Creates a new, empty dictionary using the given <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
             </summary>
             <param name="serializationInfo">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="streamingContext">The <see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
@@ -1170,7 +1170,7 @@
             <param name="oldValue">The old value</param>
             <param name="newKey">The new key</param>
             <param name="newValue">The new value</param>
-            <returns>Bollean, true if the operation was successful</returns>
+            <returns>Boolean, true if the operation was successful</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableDictionary`2.TryGetValue(`0,`1@)">
             <summary>
@@ -1189,6 +1189,150 @@
         <member name="M:BlueHeron.Collections.Generic.ObservableDictionary`2.OnChanged">
             <summary>
             Invokes the <see cref="E:BlueHeron.Collections.Generic.ObservableDictionary`2.CollectionChanged"/> event.
+            </summary>
+        </member>
+        <member name="T:BlueHeron.Collections.Generic.ObservableList`1">
+            <summary>
+            An <see cref="T:System.Collections.Generic.IList`1"/> that implements <see cref="T:BlueHeron.Collections.Generic.IObservableCollection`1"/>.
+            </summary>
+            <typeparam name="T">The type of the items in the list</typeparam>
+        </member>
+        <member name="E:BlueHeron.Collections.Generic.ObservableList`1.CollectionChanged">
+            <summary>
+            Event is fired when the collection or one or more items in the collection changed.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor">
+            <summary>
+            Creates a new, empty list.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates a new list, populated with the given collection of <typeparamref name="T"/>s.
+            </summary>
+            <param name="collection">A collection of <typeparamref name="T"/>s</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Creates a new, empty list using the given <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
+            </summary>
+            <param name="serializationInfo">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
+            <param name="streamingContext">The <see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.ObservableList`1.Count">
+            <summary>
+            Returns the number items in this list.
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.ObservableList`1.IsReadOnly">
+            <summary>
+            Returns always <code>false</code>.
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.ObservableList`1.LastChange">
+            <summary>
+            Returns the last change that occurred.
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.ObservableList`1.SyncRoot">
+            <summary>
+            Needed to ensure thread-safety.
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.ObservableList`1.Item(System.Int32)">
+            <summary>
+            Gets or sets the item at the given index.
+            </summary>
+            <param name="index">The index of the item</param>
+            <returns>The item</returns>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.ObservableList`1.SerializationInfo">
+            <summary>
+            The current <see cref="T:System.Runtime.Serialization.SerializationInfo"/>
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.ObservableList`1.StreamingContext">
+            <summary>
+            The current <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Add(`0)">
+            <summary>
+            Adds an item to the list.
+            </summary>
+            <param name="item">The item</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Clear">
+            <summary>
+            Removes all items from the list.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Contains(`0)">
+            <summary>
+            Determines whether the list contains a specific item.
+            </summary>
+            <param name="item">An item of type <typeparamref name="T"/></param>
+            <returns>Boolean, true if the item exists in the list</returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies the items of the list to the given array, starting at the given index
+            </summary>
+            <param name="array">The array to copy the items to</param>
+            <param name="arrayIndex">The index at which to start</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.GetEnumerator">
+            <summary>
+            Returns the enumerator for this collection.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerator`1"/></returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.IndexOf(`0)">
+            <summary>
+            Returns the index of the item in the list.
+            </summary>
+            <param name="item">The item</param>
+            <returns>The index</returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Insert(System.Int32,`0)">
+            <summary>
+            Inserts the item at the given index.
+            </summary>
+            <param name="index">The index</param>
+            <param name="item">The item</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Remove(`0)">
+            <summary>
+            Removes the item from the list.
+            </summary>
+            <param name="item">The item</param>
+            <returns>Boolean, true if the operation was successful</returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.RemoveAt(System.Int32)">
+            <summary>
+            Removes the item at the given index from the list.
+            </summary>
+            <param name="index">The <paramref name="index"/>of the item</param>
+            <returns>Boolean, true if the operation was successful</returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Replace(`0,`0)">
+            <summary>
+            Replace the old item with a new item.
+            </summary>
+            <param name="oldItem">The old item</param>
+            <param name="newItem">The new item</param>
+            <returns>Boolean, true if the operation was successful</returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator for this collection.
+            </summary>
+            <returns>An <see cref="T:System.Collections.IEnumerator"/></returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.OnChanged">
+            <summary>
+            Invokes the <see cref="E:BlueHeron.Collections.Generic.ObservableList`1.CollectionChanged"/> event.
             </summary>
         </member>
         <member name="T:BlueHeron.Collections.Extensions">
