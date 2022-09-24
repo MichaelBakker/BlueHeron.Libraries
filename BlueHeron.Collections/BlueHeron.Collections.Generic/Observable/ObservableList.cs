@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace BlueHeron.Collections.Generic;
@@ -7,7 +8,7 @@ namespace BlueHeron.Collections.Generic;
 /// <summary>
 /// An <see cref="IList{T}"/> that implements <see cref="IObservableCollection{T}"/>.
 /// </summary>
-/// <typeparam name="T">The type of the items in the list</typeparam>
+/// <typeparam name="T">The type of the items in the mList</typeparam>
 public class ObservableList<T> : IList<T>, IObservableCollection<T>
 {
 	#region Objects and variables
@@ -26,7 +27,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	#region Construction
 
 	/// <summary>
-	/// Creates a new, empty list.
+	/// Creates a new, empty mList.
 	/// </summary>
 	public ObservableList()
 	{
@@ -34,7 +35,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Creates a new list, populated with the given collection of <typeparamref name="T"/>s.
+	/// Creates a new mList, populated with the given collection of <typeparamref name="T"/>s.
 	/// </summary>
 	/// <param name="collection">A collection of <typeparamref name="T"/>s</param>
 	public ObservableList(IEnumerable<T> collection)
@@ -43,7 +44,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Creates a new, empty list using the given <see cref="System.Runtime.Serialization.StreamingContext"/>.
+	/// Creates a new, empty mList using the given <see cref="System.Runtime.Serialization.StreamingContext"/>.
 	/// </summary>
 	/// <param name="serializationInfo">The <see cref="System.Runtime.Serialization.SerializationInfo"/></param>
 	/// <param name="streamingContext">The <see cref="System.Runtime.Serialization.StreamingContext"/></param>
@@ -58,7 +59,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	#region Properties
 
 	/// <summary>
-	/// Returns the number items in this list.
+	/// Returns the number items in this mList.
 	/// </summary>
 	public int Count
 	{
@@ -87,9 +88,9 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	public object SyncRoot { get; } = new object();
 
 	/// <summary>
-	/// Gets or sets the item at the given index.
+	/// Gets or sets the item at the given mIndex.
 	/// </summary>
-	/// <param name="index">The index of the item</param>
+	/// <param name="index">The mIndex of the item</param>
 	/// <returns>The item</returns>
 	public T this[int index]
 	{
@@ -113,12 +114,12 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// The current <see cref="System.Runtime.Serialization.SerializationInfo"/>
+	/// The mCurrent <see cref="System.Runtime.Serialization.SerializationInfo"/>
 	/// </summary>
 	public SerializationInfo SerializationInfo { get; }
 
 	/// <summary>
-	/// The current <see cref="System.Runtime.Serialization.StreamingContext"/>.
+	/// The mCurrent <see cref="System.Runtime.Serialization.StreamingContext"/>.
 	/// </summary>
 	public StreamingContext StreamingContext { get; }
 
@@ -127,7 +128,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	#region Public methods and functions
 
 	/// <summary>
-	/// Adds an item to the list.
+	/// Adds an item to the mList.
 	/// </summary>
 	/// <param name="item">The item</param>
 	public void Add(T item)
@@ -141,7 +142,16 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Removes all items from the list.
+	/// Returns this list as an <see cref="IAsyncEnumerable{T}"/>.
+	/// </summary>
+	/// <returns>An <see cref="IAsyncEnumerable{T}"/></returns>
+	public IAsyncEnumerable<T> AsAsyncEnumerable()
+	{
+		return mList;
+	}
+
+	/// <summary>
+	/// Removes all items from the mList.
 	/// </summary>
 	public void Clear()
 	{
@@ -154,10 +164,10 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Determines whether the list contains a specific item.
+	/// Determines whether the mList contains a specific item.
 	/// </summary>
 	/// <param name="item">An item of type <typeparamref name="T"/></param>
-	/// <returns>Boolean, true if the item exists in the list</returns>
+	/// <returns>Boolean, true if the item exists in the mList</returns>
 	public bool Contains(T item)
 	{
 		lock (SyncRoot)
@@ -167,10 +177,10 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Copies the items of the list to the given array, starting at the given index
+	/// Copies the items of the mList to the given array, starting at the given mIndex
 	/// </summary>
 	/// <param name="array">The array to copy the items to</param>
-	/// <param name="arrayIndex">The index at which to start</param>
+	/// <param name="arrayIndex">The mIndex at which to start</param>
 	public void CopyTo(T[] array, int arrayIndex)
 	{
 		lock (SyncRoot)
@@ -195,19 +205,19 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Returns the index of the item in the list.
+	/// Returns the mIndex of the item in the mList.
 	/// </summary>
 	/// <param name="item">The item</param>
-	/// <returns>The index</returns>
+	/// <returns>The mIndex</returns>
 	public int IndexOf(T item)
 	{
 		return mList.IndexOf(item);
 	}
 
 	/// <summary>
-	/// Inserts the item at the given index.
+	/// Inserts the item at the given mIndex.
 	/// </summary>
-	/// <param name="index">The index</param>
+	/// <param name="index">The mIndex</param>
 	/// <param name="item">The item</param>
 	public void Insert(int index, T item)
 	{
@@ -215,7 +225,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Removes the item from the list.
+	/// Removes the item from the mList.
 	/// </summary>
 	/// <param name="item">The item</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
@@ -234,7 +244,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Removes the item at the given index from the list.
+	/// Removes the item at the given mIndex from the mList.
 	/// </summary>
 	/// <param name="index">The <paramref name="index"/>of the item</param>
 	/// <returns>Boolean, true if the operation was successful</returns>

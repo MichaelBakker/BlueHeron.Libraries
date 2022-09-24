@@ -175,12 +175,12 @@ public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IOb
 	}
 
 	/// <summary>
-	/// The current <see cref="System.Runtime.Serialization.SerializationInfo"/>
+	/// The mCurrent <see cref="System.Runtime.Serialization.SerializationInfo"/>
 	/// </summary>
 	public SerializationInfo SerializationInfo { get; }
 
 	/// <summary>
-	/// The current <see cref="System.Runtime.Serialization.StreamingContext"/>.
+	/// The mCurrent <see cref="System.Runtime.Serialization.StreamingContext"/>.
 	/// </summary>
 	public StreamingContext StreamingContext { get; }
 
@@ -252,10 +252,10 @@ public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IOb
 	}
 
 	/// <summary>
-	/// Copies the items of the dictionary to the given array, starting at the given index
+	/// Copies the items of the dictionary to the given array, starting at the given mIndex
 	/// </summary>
 	/// <param name="array">The array to copy the items to</param>
-	/// <param name="arrayIndex">The index at which to start</param>
+	/// <param name="arrayIndex">The mIndex at which to start</param>
 	public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 	{
 		lock (SyncRoot)

@@ -7,7 +7,7 @@ namespace BlueHeron.Collections.Generic
     /// <summary>
     /// Object that maps indexes to names and vice versa, and maps indexes to values.
     /// </summary>
-    /// <typeparam name="TIndex">The type of the index</typeparam>
+    /// <typeparam name="TIndex">The type of the mIndex</typeparam>
     /// <typeparam name="TName">The type of the name</typeparam>
     /// <typeparam name="TValue">The type of the value</typeparam>
     public sealed class MappingCollection<TIndex, TName, TValue>
@@ -18,7 +18,7 @@ namespace BlueHeron.Collections.Generic
         private readonly Dictionary<TName, TIndex> nameIndexMapping = new();
         private readonly Dictionary<TIndex, TValue> indexDataMapping = new();
 
-        private const string errDuplicateIndex = "Cannot add duplicate index.";
+        private const string errDuplicateIndex = "Cannot add duplicate mIndex.";
         private const string errDuplicateName = "Cannot add duplicate name.";
 
         #endregion
@@ -41,12 +41,12 @@ namespace BlueHeron.Collections.Generic
         public IEnumerable<TIndex> Keys => indexNameMapping.Keys;
 
         /// <summary>
-        /// Returns the index to name mappings as array of <see cref="KeyValuePair{TIndex, TValue}"/>s.
+        /// Returns the mIndex to name mappings as array of <see cref="KeyValuePair{TIndex, TValue}"/>s.
         /// </summary>
         public KeyValuePair<TIndex, TValue>[] MappingArray { get; private set; } = Array.Empty<KeyValuePair<TIndex, TValue>>();
 
         /// <summary>
-        /// Returns the value with the given key (i.e. index).
+        /// Returns the value with the given key (i.e. mIndex).
         /// </summary>
         /// <param name="key">The <typeparamref name="TIndex"/> of the value</param>
         /// <returns>A <typeparamref name="TValue"/></returns>

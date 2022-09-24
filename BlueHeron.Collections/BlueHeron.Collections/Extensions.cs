@@ -15,17 +15,17 @@ namespace BlueHeron.Collections
 		/// Gets the internal array of a <see cref="List{T}"/>.
 		/// </summary>
 		/// <typeparam name="T">The type of the elements.</typeparam>
-		/// <param name="list">The respective list.</param>
-		/// <returns>The internal array of the list.</returns>
+		/// <param name="list">The respective mList.</param>
+		/// <returns>The internal array of the mList.</returns>
 		public static T[] GetArray<T>(this List<T> list)
 		{
 			return list.ToArray();
 		}
 
 		/// <summary>
-		/// Returns the list as a typed array.
+		/// Returns the mList as a typed array.
 		/// </summary>
-		/// <typeparam name="T">The type of the lements in the list</typeparam>
+		/// <typeparam name="T">The type of the lements in the mList</typeparam>
 		/// <param name="list">An <see cref="IList{T}"/></param>
 		/// <returns>A array of elements of type T</returns>
 		public static T[] GetArrayByType<T>(this IList<T> list)

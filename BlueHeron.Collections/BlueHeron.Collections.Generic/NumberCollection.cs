@@ -31,7 +31,7 @@ namespace BlueHeron.Collections.Generic
         /// <summary>
         /// Creates a new, empty NumberCollection with the given capacity.
         /// </summary>
-        /// <param name="capacity">The capacity of the list</param>
+        /// <param name="capacity">The capacity of the mList</param>
         public NumberCollection(int capacity) : base(capacity) { }
 
         /// <summary>

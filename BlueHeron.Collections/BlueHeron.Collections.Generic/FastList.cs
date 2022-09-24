@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BlueHeron.Collections.Generic
 {
 	/// <summary>
-	/// A fast and lean <see cref="List{T}"/>, with direct access to the underlying array and extended with search.
+	/// A fast and lean <see cref="List{T}"/>, with direct access to the underlying array and extended with asynchronous enumeration and search.
 	/// </summary>
 	/// <typeparam name="T">The type of the elements in the list</typeparam>
 	[DebuggerDisplay("Count = {Count}"), DebuggerStepThrough()]
-	public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerable<T>, IEnumerable
+	public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IAsyncEnumerable<T>
 	{
 		#region Objects and variables
 
@@ -115,7 +117,7 @@ namespace BlueHeron.Collections.Generic
 		/// <summary>
 		/// Indexed accessor.
 		/// </summary>
-		/// <param name="index">The sourceIndex of the element</param>
+		/// <param name="index">The index of the element</param>
 		/// <returns>The element</returns>
 		public T this[int index]
 		{
@@ -143,7 +145,7 @@ namespace BlueHeron.Collections.Generic
 		/// <summary>
 		/// Fast add all from another <see cref="FastList{T}"/>.
 		/// </summary>
-		/// <param name="list">The list.</param>
+		/// <param name="list">The list from which to add all items to this list</param>
 		public void AddAll(FastList<T> list)
 		{
 			EnsureCapacity(mSize + list.Count);
@@ -170,43 +172,43 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
-		/// Searches the entire list for the given element, using the System.IComparable`1 generic interface implemented by each element of the list and by the specified object.
+		/// Searches the entire list for the given element, using the <see cref="IComparable{T}"/> generic interface implemented by each element of the list and by the specified object.
 		/// </summary>
 		/// <param name="item">The item to search for</param>
-		/// <returns>The sourceIndex of the specified value in the list, if value is found; otherwise, a negative number.
-		/// If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the sourceIndex of the first element that is larger than value.
-		/// If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the sourceIndex of the last element plus 1).
-		/// If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if value is present in the list</returns>
+		/// <returns>The index of the specified value in the list, if value is found; otherwise, a negative number.
+		/// If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the index of the first element that is larger than the value.
+		/// If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the index of the last element plus 1).
+		/// If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if the value is present in the list</returns>
 		public int BinarySearch(T item)
 		{
 			return BinarySearch(0, Count, item, null);
 		}
 
 		/// <summary>
-		/// Searches the entire list for the given element using the specified System.Collections.Generic.IComparer`1 generic interface.
+		/// Searches the entire list for the given element using the specified <see cref="IComparer{T}"/> generic interface.
 		/// </summary>
 		/// <param name="item">The item to search for</param>
-		/// <param name="comparer">The System.Collections.Generic.IComparer`1 implementation to use when comparing elements or null to use the System.IComparable`1 implementation of each element</param>
-		/// <returns>The sourceIndex of the specified value in the list, if value is found; otherwise, a negative number.
-		/// If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the sourceIndex of the first element that is larger than value.
-		/// If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the sourceIndex of the last element plus 1).
-		/// If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if value is present in the list</returns>
+		/// <param name="comparer">The <see cref="IComparer{T}"/> implementation to use when comparing elements or null to use the <see cref="IComparable{T}"/> implementation of each element</param>
+		/// <returns>The index of the specified value in the mList, if value is found; otherwise, a negative number.
+		/// If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the index of the first element that is larger than the value.
+		/// If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the index of the last element plus 1).
+		/// If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if the value is present in the list</returns>
 		public int BinarySearch(T item, IComparer<T> comparer)
 		{
 			return BinarySearch(0, Count, item, comparer);
 		}
 
 		/// <summary>
-		/// Searches a range of elements in the list for the given element, using the specified System.Collections.Generic.IComparer`1 generic interface.
+		/// Searches a range of elements in the list for the given element, using the specified <see cref="IComparer{T}"/> generic interface.
 		/// </summary>
-		/// <param name="index">The starting sourceIndex of the range to search</param>
+		/// <param name="index">The starting index of the range to search</param>
 		/// <param name="count">The length of the range to search</param>
 		/// <param name="item">The item to search for</param>
-		/// <param name="comparer">The System.Collections.Generic.IComparer`1 implementation to use when comparing elements or null to use the System.IComparable`1 implementation of each element</param>
-		/// <returns>The sourceIndex of the specified value in the list, if value is found; otherwise, a negative number.
-		/// If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the sourceIndex of the first element that is larger than value.
-		/// If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the sourceIndex of the last element plus 1).
-		/// If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if value is present in the list</returns>
+		/// <param name="comparer">The <see cref="IComparer{T}"/> implementation to use when comparing elements or null to use the <see cref="IComparable{T}"/> implementation of each element</param>
+		/// <returns>The index of the specified value in the mList, if value is found; otherwise, a negative number.
+		/// If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the index of the first element that is larger than the value.
+		/// If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the index of the last element plus 1).
+		/// If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if the value is present in the list</returns>
 		public int BinarySearch(int index, int count, T item, IComparer<T> comparer)
 		{
 			return Array.BinarySearch(Items, index, count, item, comparer);
@@ -259,17 +261,17 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
-		/// Copies the items in this list to the given array, starting at the given sourceIndex.
+		/// Copies the items in this list to the given array, starting at the given index.
 		/// </summary>
 		/// <param name="array">The array to copy to</param>
-		/// <param name="arrayIndex">The sourceIndex in the given array at which to start copying</param>
+		/// <param name="arrayIndex">The index in the given array at which to start copying</param>
 		public void CopyTo(T[] array, int arrayIndex)
 		{
 			Array.Copy(Items, 0, array, arrayIndex, mSize);
 		}
 
 		/// <summary>
-		/// Copies the items in this list to the given array, starting at an sourceIndex of zero.
+		/// Copies the items in this list to the given array, starting at an index of zero.
 		/// </summary>
 		/// <param name="array">The array to copy to</param>
 		public void CopyTo(T[] array)
@@ -278,7 +280,7 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
-		/// Copies a range of elements from the list starting at the specified source sourceIndex and pastes them to the given System.Array starting at the specified destination sourceIndex.
+		/// Copies a range of elements from the list starting at the specified source index and pastes them into the given <see cref="Array"/> starting at the specified destination index.
 		/// The length and the indexes are specified as 64-bit integers.
 		/// </summary>
 		/// <param name="sourceIndex">The starting index in this list</param>
@@ -476,6 +478,16 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
+		/// Returns an <see cref="IAsyncEnumerator{T}"/> for this list.
+		/// </summary>
+		/// <param name="cancellationToken"></param>
+		/// <returns>An <see cref="IAsyncEnumerator{T}"/></returns>
+		public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+		{
+			return new Enumerator(this, cancellationToken);
+		}
+
+		/// <summary>
 		/// Returns an <see cref="Enumerator" /> for this list.
 		/// </summary>
 		/// <returns>An <see cref="Enumerator" /></returns>
@@ -518,44 +530,44 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
-		/// Returns the sourceIndex in this list of the first instance of the given item.
+		/// Returns the index in this list of the first instance of the given item.
 		/// </summary>
 		/// <param name="item">The item to check</param>
-		/// <returns>The zero-based sourceIndex of the first occurrence of this item if found, otherwise -1</returns>
+		/// <returns>The zero-based index of the first occurrence of this item if found, otherwise -1</returns>
 		public int IndexOf(T item)
 		{
 			return Array.IndexOf(Items, item, 0, mSize);
 		}
 
 		/// <summary>
-		/// Returns the sourceIndex in this list of the first instance of the given item.
+		/// Returns the index in this list of the first instance of the given item.
 		/// The search is started at the given index.
 		/// </summary>
 		/// <param name="item">The item to check</param>
 		/// <param name="index">The index at which to start searching</param>
-		/// <returns>The zero-based sourceIndex of the first occurrence of this item if found, otherwise -1</returns>
+		/// <returns>The zero-based index of the first occurrence of this item if found, otherwise -1</returns>
 		public int IndexOf(T item, int index)
 		{
 			return Array.IndexOf(Items, item, index, mSize - index);
 		}
 
 		/// <summary>
-		/// Returns the sourceIndex in this list of the first instance of the given item.
+		/// Returns the index in this list of the first instance of the given item.
 		/// The search is started at the given index and searches the given number of items.
 		/// </summary>
 		/// <param name="item">The item to check</param>
 		/// <param name="index">The index at which to start searching</param>
 		/// <param name="count">The number of items to search through</param> 
-		/// <returns>The zero-based sourceIndex of the first occurrence of this item if found, otherwise -1</returns>
+		/// <returns>The zero-based index of the first occurrence of this item if found, otherwise -1</returns>
 		public int IndexOf(T item, int index, int count)
 		{
 			return Array.IndexOf(Items, item, index, count);
 		}
 
 		/// <summary>
-		/// Inserts the given item at the given sourceIndex in the list.
+		/// Inserts the given item at the given index in the list.
 		/// </summary>
-		/// <param name="index">The sourceIndex at which to insert the item</param>
+		/// <param name="index">The index at which to insert the item</param>
 		/// <param name="item">The item to insert</param>
 		public void Insert(int index, T item)
 		{
@@ -630,7 +642,7 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
-		/// Returns the sourceIndex in this list of the last instance of the given item.
+		/// Returns the index in this list of the last instance of the given item.
 		/// </summary>
 		/// <param name="item">The item to check</param>
 		/// <returns>The zero-based sourceIndex of the last occurrence of this item if found, otherwise -1</returns>
@@ -644,19 +656,19 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
-		/// Returns the sourceIndex in this list of the last instance of the given item.
+		/// Returns the index in this list of the last instance of the given item.
 		/// The search is started at the given index.
 		/// </summary>
 		/// <param name="item">The item to check</param>
 		/// <param name="index">The index at which to start searching</param>
-		/// <returns>The zero-based sourceIndex of the last occurrence of this item if found, otherwise -1</returns>
+		/// <returns>The zero-based index of the last occurrence of this item if found, otherwise -1</returns>
 		public int LastIndexOf(T item, int index)
 		{
 			return LastIndexOf(item, index, index + 1);
 		}
 
 		/// <summary>
-		/// Returns the sourceIndex in this list of the last instance of the given item.
+		/// Returns the index in this list of the last instance of the given item.
 		/// The search is started at the given index and searches the given number of items.
 		/// </summary>
 		/// <param name="item">The item to check</param>
@@ -723,9 +735,9 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
-		/// Removes the item at the given sourceIndex from the list.
+		/// Removes the item at the given index from the list.
 		/// </summary>
-		/// <param name="index">The sourceIndex of the item</param>
+		/// <param name="index">The index of the item</param>
 		/// <exception cref="ArgumentOutOfRangeException">Index must be larger than or equal to zero and smaller than the size of this list</exception>
 		public void RemoveAt(int index)
 		{
@@ -856,7 +868,7 @@ namespace BlueHeron.Collections.Generic
 		#region Private methods and functions
 
 		/// <summary>
-		/// Returns an <see cref="IEnumerator{T}"/> for this list.
+		/// Returns an <see cref="IEnumerator{T}"/> for this mList.
 		/// </summary>
 		/// <returns>An <see cref="IEnumerator{T}"/></returns>
 		IEnumerator<T> IEnumerable<T>.GetEnumerator()
@@ -865,7 +877,7 @@ namespace BlueHeron.Collections.Generic
 		}
 
 		/// <summary>
-		/// Returns an <see cref="IEnumerator"/> for this list.
+		/// Returns an <see cref="IEnumerator"/> for this mList.
 		/// </summary>
 		/// <returns>An <see cref="IEnumerator"/></returns>
 		IEnumerator IEnumerable.GetEnumerator()
@@ -878,16 +890,48 @@ namespace BlueHeron.Collections.Generic
 		#region Enumerator
 
 		/// <summary>
-		/// A custom <see cref="IEnumerator{T}"/> and <see cref="IEnumerator"/> implementation, optimized for <see cref="FastList{T}"/>s.
+		/// A custom <see cref="IEnumerator{T}"/>, <see cref="IAsyncEnumerator{T}"/> and <see cref="IEnumerator"/> implementation, optimized for <see cref="FastList{T}"/>s.
 		/// </summary>
 		[StructLayout(LayoutKind.Sequential), DebuggerStepThrough()]
-		public struct Enumerator : IEnumerator<T>, IDisposable, IEnumerator
+		public struct Enumerator : IEnumerator<T>, IDisposable, IEnumerator, IAsyncEnumerator<T>, IAsyncDisposable
 		{
 			#region Objects and variables
 
-			private readonly FastList<T> list;
-			private int index;
-			private T current;
+			private T mCurrent;
+			private int mIndex;
+			private readonly FastList<T> mList;
+			private readonly CancellationToken mToken;
+
+			#endregion
+
+			#region Construction and destruction
+
+			/// <summary>
+			/// Creates a new enumerator for the given <see cref="FastList{T}"/>.
+			/// </summary>
+			/// <param name="list">The <see cref="FastList{T}"/> for which to return an enumerator</param>
+			/// <param name="cancellationToken"></param>
+			internal Enumerator(FastList<T> list, CancellationToken cancellationToken = default)
+			{
+				mList = list;
+				mIndex = 0;
+				mCurrent = default;
+				mToken = cancellationToken;
+			}
+
+			/// <summary>
+			/// Frees up resources held by this object (none).
+			/// </summary>
+			public void Dispose() { }
+
+			/// <summary>
+			/// Frees up resources held by this object (none).
+			/// </summary>
+			/// <returns>A <see cref="ValueTask.CompletedTask"/></returns>
+			public ValueTask DisposeAsync()
+			{
+				return ValueTask.CompletedTask;
+			}
 
 			#endregion
 
@@ -896,32 +940,12 @@ namespace BlueHeron.Collections.Generic
 			/// <summary>
 			/// Gets the current item.
 			/// </summary>
-			public T Current => current;
+			public T Current => mCurrent;
 
 			/// <summary>
 			/// Gets the current item.
 			/// </summary>
-			object IEnumerator.Current => Current;
-
-			#endregion
-
-			#region Construction and destruction.
-
-			/// <summary>
-			/// Creates a new enumerator for the given <see cref="FastList{T}"/>.
-			/// </summary>
-			/// <param name="list">The <see cref="FastList{T}"/> for which to return an enumerator</param>
-			internal Enumerator(FastList<T> list)
-			{
-				this.list = list;
-				index = 0;
-				current = default;
-			}
-
-			/// <summary>
-			/// Frees up resources held by this object (none).
-			/// </summary>
-			public void Dispose() { }
+			object IEnumerator.Current => mCurrent;
 
 			#endregion
 
@@ -933,14 +957,23 @@ namespace BlueHeron.Collections.Generic
 			/// <returns>Boolean, true if the enumerator has moved to the next item</returns>
 			public bool MoveNext()
 			{
-				var list = this.list;
-				if (index < list.mSize)
+				if (mIndex < mList.mSize)
 				{
-					current = list.Items[index];
-					index++;
+					mCurrent = mList[mIndex];
+					mIndex++;
 					return true;
 				}
 				return MoveNextRare();
+			}
+
+			/// <summary>
+			/// Moves to the next item asynchronously.
+			/// </summary>
+			/// <returns>A <see cref="ValueTask{Boolean}"/></returns>
+			public ValueTask<bool> MoveNextAsync()
+			{
+				mToken.ThrowIfCancellationRequested();
+				return ValueTask.FromResult(MoveNext());
 			}
 
 			#endregion
@@ -953,8 +986,8 @@ namespace BlueHeron.Collections.Generic
 			/// <returns>False</returns>
 			private bool MoveNextRare()
 			{
-				index = list.mSize + 1;
-				current = default;
+				mIndex = mList.mSize + 1;
+				mCurrent = default;
 				return false;
 			}
 
@@ -963,13 +996,11 @@ namespace BlueHeron.Collections.Generic
 			/// </summary>
 			void IEnumerator.Reset()
 			{
-				index = 0;
-				current = default;
+				mIndex = 0;
+				mCurrent = default;
 			}
-
 			#endregion
 		}
-
 		#endregion
 	}
 }

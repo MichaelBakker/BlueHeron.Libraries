@@ -34,7 +34,7 @@ namespace BlueHeron.Collections
 		/// <summary> 
 		/// Creates a StringTokenizer with the given <see cref="IFormatProvider"/>.
 		/// If the IFormatProvider is null, use the thread's IFormatProvider info. 
-		/// ',' is used as the list separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
+		/// ',' is used as the mList separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
 		/// </summary> 
 		/// <param name="str">The string to tokenize</param>
 		/// <param name="formatProvider">The <see cref="IFormatProvider"/> which controls this tokenization</param> 
@@ -45,11 +45,11 @@ namespace BlueHeron.Collections
 		}
 
 		/// <summary>
-		/// Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the list separator.
+		/// Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the mList separator.
 		/// </summary> 
 		/// <param name="str">The string to tokenize</param>
 		/// <param name="quoteChar">The quote character</param> 
-		/// <param name="separator">The list separator</param> 
+		/// <param name="separator">The mList separator</param> 
 		public StringTokenizer(string str, char quoteChar, char separator)
 		{
 			Initialize(str, quoteChar, separator);
@@ -69,12 +69,12 @@ namespace BlueHeron.Collections
 		#region Public methods and functions
 
 		/// <summary>
-		/// Returns the current token if present, else null.
+		/// Returns the mCurrent token if present, else null.
 		/// </summary>
-		/// <returns>A <see cref="string"/>, representing the current token</returns>
+		/// <returns>A <see cref="string"/>, representing the mCurrent token</returns>
 		public string GetCurrentToken()
 		{            
-			if (mCurTokenIndex < 0) // if no current token, return null 
+			if (mCurTokenIndex < 0) // if no mCurrent token, return null 
 			{
 				return null;
 			}
@@ -82,7 +82,7 @@ namespace BlueHeron.Collections
 		}
 
 		/// <summary>
-		/// Get the numeric list separator for a given IFormatProvider.
+		/// Get the numeric mList separator for a given IFormatProvider.
 		/// Separator is a comma [,] if the decimal separator is not a comma, else a semicolon [;] is used.
 		/// </summary>
 		/// <param name="provider">The <see cref="IFormatProvider"/> to use</param>
@@ -90,9 +90,9 @@ namespace BlueHeron.Collections
 		public static char GetNumericListSeparator(IFormatProvider provider)
 		{
 			var numericSeparator = _COMMA;
-			var numberFormat = NumberFormatInfo.GetInstance(provider); // Get the NumberFormatInfo out of the provider, if possible. If the IFormatProvider doesn't not contain a NumberFormatInfo, then this method returns the current culture's NumberFormatInfo
+			var numberFormat = NumberFormatInfo.GetInstance(provider); // Get the NumberFormatInfo out of the provider, if possible. If the IFormatProvider doesn't not contain a NumberFormatInfo, then this method returns the mCurrent culture's NumberFormatInfo
 
-			if ((numberFormat.NumberDecimalSeparator.Length > 0) && (numericSeparator == numberFormat.NumberDecimalSeparator[0])) // If the decimal separator is the same as the list separator, use the ";"
+			if ((numberFormat.NumberDecimalSeparator.Length > 0) && (numericSeparator == numberFormat.NumberDecimalSeparator[0])) // If the decimal separator is the same as the mList separator, use the ";"
 			{
 				numericSeparator = _SEMICOLON;
 			}
@@ -153,7 +153,7 @@ namespace BlueHeron.Collections
 		/// <returns>True if next token was found, false if at end of string</returns> 
 		public bool NextToken(bool allowQuotedToken)
 		{
-			return NextToken(allowQuotedToken, mArgSeparator); // use the current separator character
+			return NextToken(allowQuotedToken, mArgSeparator); // use the mCurrent separator character
 		}
 
 		/// <summary>
@@ -237,11 +237,11 @@ namespace BlueHeron.Collections
 		#region Private methods and functions
 
 		/// <summary>
-		/// Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the list separator.
+		/// Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the mList separator.
 		/// </summary> 
 		/// <param name="str">The string to tokenize</param>
 		/// <param name="quoteChar">The quote char</param> 
-		/// <param name="separator">The list separator</param> 
+		/// <param name="separator">The mList separator</param> 
 		private void Initialize(string str, char quoteChar, char separator)
 		{
 			mString = str;

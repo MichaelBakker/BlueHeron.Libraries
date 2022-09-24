@@ -270,7 +270,7 @@
         </member>
         <member name="T:BlueHeron.Collections.Generic.FastList`1">
             <summary>
-            A fast and lean <see cref="T:System.Collections.Generic.List`1"/>, with direct access to the underlying array and extended with search.
+            A fast and lean <see cref="T:System.Collections.Generic.List`1"/>, with direct access to the underlying array and extended with asynchronous enumeration and search.
             </summary>
             <typeparam name="T">The type of the elements in the list</typeparam>
         </member>
@@ -315,7 +315,7 @@
             <summary>
             Indexed accessor.
             </summary>
-            <param name="index">The sourceIndex of the element</param>
+            <param name="index">The index of the element</param>
             <returns>The element</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Add(`0)">
@@ -328,7 +328,7 @@
             <summary>
             Fast add all from another <see cref="T:BlueHeron.Collections.Generic.FastList`1"/>.
             </summary>
-            <param name="list">The list.</param>
+            <param name="list">The list from which to add all items to this list</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
             <summary>
@@ -344,37 +344,37 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.BinarySearch(`0)">
             <summary>
-            Searches the entire list for the given element, using the System.IComparable`1 generic interface implemented by each element of the list and by the specified object.
+            Searches the entire list for the given element, using the <see cref="T:System.IComparable`1"/> generic interface implemented by each element of the list and by the specified object.
             </summary>
             <param name="item">The item to search for</param>
-            <returns>The sourceIndex of the specified value in the list, if value is found; otherwise, a negative number.
-            If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the sourceIndex of the first element that is larger than value.
-            If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the sourceIndex of the last element plus 1).
-            If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if value is present in the list</returns>
+            <returns>The index of the specified value in the list, if value is found; otherwise, a negative number.
+            If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the index of the first element that is larger than the value.
+            If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the index of the last element plus 1).
+            If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if the value is present in the list</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.BinarySearch(`0,System.Collections.Generic.IComparer{`0})">
             <summary>
-            Searches the entire list for the given element using the specified System.Collections.Generic.IComparer`1 generic interface.
+            Searches the entire list for the given element using the specified <see cref="T:System.Collections.Generic.IComparer`1"/> generic interface.
             </summary>
             <param name="item">The item to search for</param>
-            <param name="comparer">The System.Collections.Generic.IComparer`1 implementation to use when comparing elements or null to use the System.IComparable`1 implementation of each element</param>
-            <returns>The sourceIndex of the specified value in the list, if value is found; otherwise, a negative number.
-            If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the sourceIndex of the first element that is larger than value.
-            If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the sourceIndex of the last element plus 1).
-            If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if value is present in the list</returns>
+            <param name="comparer">The <see cref="T:System.Collections.Generic.IComparer`1"/> implementation to use when comparing elements or null to use the <see cref="T:System.IComparable`1"/> implementation of each element</param>
+            <returns>The index of the specified value in the mList, if value is found; otherwise, a negative number.
+            If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the index of the first element that is larger than the value.
+            If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the index of the last element plus 1).
+            If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if the value is present in the list</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.BinarySearch(System.Int32,System.Int32,`0,System.Collections.Generic.IComparer{`0})">
             <summary>
-            Searches a range of elements in the list for the given element, using the specified System.Collections.Generic.IComparer`1 generic interface.
+            Searches a range of elements in the list for the given element, using the specified <see cref="T:System.Collections.Generic.IComparer`1"/> generic interface.
             </summary>
-            <param name="index">The starting sourceIndex of the range to search</param>
+            <param name="index">The starting index of the range to search</param>
             <param name="count">The length of the range to search</param>
             <param name="item">The item to search for</param>
-            <param name="comparer">The System.Collections.Generic.IComparer`1 implementation to use when comparing elements or null to use the System.IComparable`1 implementation of each element</param>
-            <returns>The sourceIndex of the specified value in the list, if value is found; otherwise, a negative number.
-            If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the sourceIndex of the first element that is larger than value.
-            If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the sourceIndex of the last element plus 1).
-            If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if value is present in the list</returns>
+            <param name="comparer">The <see cref="T:System.Collections.Generic.IComparer`1"/> implementation to use when comparing elements or null to use the <see cref="T:System.IComparable`1"/> implementation of each element</param>
+            <returns>The index of the specified value in the mList, if value is found; otherwise, a negative number.
+            If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the index of the first element that is larger than the value.
+            If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the index of the last element plus 1).
+            If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if the value is present in the list</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Clear">
             <summary>
@@ -396,20 +396,20 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.CopyTo(`0[],System.Int32)">
             <summary>
-            Copies the items in this list to the given array, starting at the given sourceIndex.
+            Copies the items in this list to the given array, starting at the given index.
             </summary>
             <param name="array">The array to copy to</param>
-            <param name="arrayIndex">The sourceIndex in the given array at which to start copying</param>
+            <param name="arrayIndex">The index in the given array at which to start copying</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.CopyTo(`0[])">
             <summary>
-            Copies the items in this list to the given array, starting at an sourceIndex of zero.
+            Copies the items in this list to the given array, starting at an index of zero.
             </summary>
             <param name="array">The array to copy to</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.CopyTo(System.Int32,`0[],System.Int32,System.Int32)">
             <summary>
-            Copies a range of elements from the list starting at the specified source sourceIndex and pastes them to the given System.Array starting at the specified destination sourceIndex.
+            Copies a range of elements from the list starting at the specified source index and pastes them into the given <see cref="T:System.Array"/> starting at the specified destination index.
             The length and the indexes are specified as 64-bit integers.
             </summary>
             <param name="sourceIndex">The starting index in this list</param>
@@ -517,6 +517,13 @@
             </summary>
             <param name="action">The <see cref="T:System.Action`1"/></param>
         </member>
+        <member name="M:BlueHeron.Collections.Generic.FastList`1.GetAsyncEnumerator(System.Threading.CancellationToken)">
+            <summary>
+            Returns an <see cref="T:System.Collections.Generic.IAsyncEnumerator`1"/> for this list.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerator`1"/></returns>
+        </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.GetEnumerator">
             <summary>
             Returns an <see cref="T:BlueHeron.Collections.Generic.FastList`1.Enumerator" /> for this list.
@@ -545,35 +552,35 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.IndexOf(`0)">
             <summary>
-            Returns the sourceIndex in this list of the first instance of the given item.
+            Returns the index in this list of the first instance of the given item.
             </summary>
             <param name="item">The item to check</param>
-            <returns>The zero-based sourceIndex of the first occurrence of this item if found, otherwise -1</returns>
+            <returns>The zero-based index of the first occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.IndexOf(`0,System.Int32)">
             <summary>
-            Returns the sourceIndex in this list of the first instance of the given item.
+            Returns the index in this list of the first instance of the given item.
             The search is started at the given index.
             </summary>
             <param name="item">The item to check</param>
             <param name="index">The index at which to start searching</param>
-            <returns>The zero-based sourceIndex of the first occurrence of this item if found, otherwise -1</returns>
+            <returns>The zero-based index of the first occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.IndexOf(`0,System.Int32,System.Int32)">
             <summary>
-            Returns the sourceIndex in this list of the first instance of the given item.
+            Returns the index in this list of the first instance of the given item.
             The search is started at the given index and searches the given number of items.
             </summary>
             <param name="item">The item to check</param>
             <param name="index">The index at which to start searching</param>
             <param name="count">The number of items to search through</param> 
-            <returns>The zero-based sourceIndex of the first occurrence of this item if found, otherwise -1</returns>
+            <returns>The zero-based index of the first occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Insert(System.Int32,`0)">
             <summary>
-            Inserts the given item at the given sourceIndex in the list.
+            Inserts the given item at the given index in the list.
             </summary>
-            <param name="index">The sourceIndex at which to insert the item</param>
+            <param name="index">The index at which to insert the item</param>
             <param name="item">The item to insert</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{`0})">
@@ -592,23 +599,23 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.LastIndexOf(`0)">
             <summary>
-            Returns the sourceIndex in this list of the last instance of the given item.
+            Returns the index in this list of the last instance of the given item.
             </summary>
             <param name="item">The item to check</param>
             <returns>The zero-based sourceIndex of the last occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.LastIndexOf(`0,System.Int32)">
             <summary>
-            Returns the sourceIndex in this list of the last instance of the given item.
+            Returns the index in this list of the last instance of the given item.
             The search is started at the given index.
             </summary>
             <param name="item">The item to check</param>
             <param name="index">The index at which to start searching</param>
-            <returns>The zero-based sourceIndex of the last occurrence of this item if found, otherwise -1</returns>
+            <returns>The zero-based index of the last occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.LastIndexOf(`0,System.Int32,System.Int32)">
             <summary>
-            Returns the sourceIndex in this list of the last instance of the given item.
+            Returns the index in this list of the last instance of the given item.
             The search is started at the given index and searches the given number of items.
             </summary>
             <param name="item">The item to check</param>
@@ -632,9 +639,9 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.RemoveAt(System.Int32)">
             <summary>
-            Removes the item at the given sourceIndex from the list.
+            Removes the item at the given index from the list.
             </summary>
-            <param name="index">The sourceIndex of the item</param>
+            <param name="index">The index of the item</param>
             <exception cref="T:System.ArgumentOutOfRangeException">Index must be larger than or equal to zero and smaller than the size of this list</exception>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.RemoveRange(System.Int32,System.Int32)">
@@ -695,20 +702,38 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
             <summary>
-            Returns an <see cref="T:System.Collections.Generic.IEnumerator`1"/> for this list.
+            Returns an <see cref="T:System.Collections.Generic.IEnumerator`1"/> for this mList.
             </summary>
             <returns>An <see cref="T:System.Collections.Generic.IEnumerator`1"/></returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.System#Collections#IEnumerable#GetEnumerator">
             <summary>
-            Returns an <see cref="T:System.Collections.IEnumerator"/> for this list.
+            Returns an <see cref="T:System.Collections.IEnumerator"/> for this mList.
             </summary>
             <returns>An <see cref="T:System.Collections.IEnumerator"/></returns>
         </member>
         <member name="T:BlueHeron.Collections.Generic.FastList`1.Enumerator">
             <summary>
-            A custom <see cref="T:System.Collections.Generic.IEnumerator`1"/> and <see cref="T:System.Collections.IEnumerator"/> implementation, optimized for <see cref="T:BlueHeron.Collections.Generic.FastList`1"/>s.
+            A custom <see cref="T:System.Collections.Generic.IEnumerator`1"/>, <see cref="T:System.Collections.Generic.IAsyncEnumerator`1"/> and <see cref="T:System.Collections.IEnumerator"/> implementation, optimized for <see cref="T:BlueHeron.Collections.Generic.FastList`1"/>s.
             </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.FastList`1.Enumerator.#ctor(BlueHeron.Collections.Generic.FastList{`0},System.Threading.CancellationToken)">
+            <summary>
+            Creates a new enumerator for the given <see cref="T:BlueHeron.Collections.Generic.FastList`1"/>.
+            </summary>
+            <param name="list">The <see cref="T:BlueHeron.Collections.Generic.FastList`1"/> for which to return an enumerator</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.FastList`1.Enumerator.Dispose">
+            <summary>
+            Frees up resources held by this object (none).
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.FastList`1.Enumerator.DisposeAsync">
+            <summary>
+            Frees up resources held by this object (none).
+            </summary>
+            <returns>A <see cref="P:System.Threading.Tasks.ValueTask.CompletedTask"/></returns>
         </member>
         <member name="P:BlueHeron.Collections.Generic.FastList`1.Enumerator.Current">
             <summary>
@@ -720,22 +745,17 @@
             Gets the current item.
             </summary>
         </member>
-        <member name="M:BlueHeron.Collections.Generic.FastList`1.Enumerator.#ctor(BlueHeron.Collections.Generic.FastList{`0})">
-            <summary>
-            Creates a new enumerator for the given <see cref="T:BlueHeron.Collections.Generic.FastList`1"/>.
-            </summary>
-            <param name="list">The <see cref="T:BlueHeron.Collections.Generic.FastList`1"/> for which to return an enumerator</param>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.FastList`1.Enumerator.Dispose">
-            <summary>
-            Frees up resources held by this object (none).
-            </summary>
-        </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Enumerator.MoveNext">
             <summary>
             Moves to the next item in the list, if present and returns true. If no more items are present, false is returned.
             </summary>
             <returns>Boolean, true if the enumerator has moved to the next item</returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.FastList`1.Enumerator.MoveNextAsync">
+            <summary>
+            Moves to the next item asynchronously.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.ValueTask`1"/></returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.Enumerator.MoveNextRare">
             <summary>
@@ -752,7 +772,7 @@
             <summary>
             Object that maps indexes to names and vice versa, and maps indexes to values.
             </summary>
-            <typeparam name="TIndex">The type of the index</typeparam>
+            <typeparam name="TIndex">The type of the mIndex</typeparam>
             <typeparam name="TName">The type of the name</typeparam>
             <typeparam name="TValue">The type of the value</typeparam>
         </member>
@@ -773,12 +793,12 @@
         </member>
         <member name="P:BlueHeron.Collections.Generic.MappingCollection`3.MappingArray">
             <summary>
-            Returns the index to name mappings as array of <see cref="T:System.Collections.Generic.KeyValuePair`2"/>s.
+            Returns the mIndex to name mappings as array of <see cref="T:System.Collections.Generic.KeyValuePair`2"/>s.
             </summary>
         </member>
         <member name="P:BlueHeron.Collections.Generic.MappingCollection`3.Item(`0)">
             <summary>
-            Returns the value with the given key (i.e. index).
+            Returns the value with the given key (i.e. mIndex).
             </summary>
             <param name="key">The <typeparamref name="TIndex"/> of the value</param>
             <returns>A <typeparamref name="TValue"/></returns>
@@ -878,7 +898,7 @@
             <summary>
             Creates a new, empty NumberCollection with the given capacity.
             </summary>
-            <param name="capacity">The capacity of the list</param>
+            <param name="capacity">The capacity of the mList</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.NumberCollection`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
             <summary>
@@ -1095,12 +1115,12 @@
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableDictionary`2.SerializationInfo">
             <summary>
-            The current <see cref="T:System.Runtime.Serialization.SerializationInfo"/>
+            The mCurrent <see cref="T:System.Runtime.Serialization.SerializationInfo"/>
             </summary>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableDictionary`2.StreamingContext">
             <summary>
-            The current <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
+            The mCurrent <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableDictionary`2.Add(`0,`1)">
@@ -1137,10 +1157,10 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableDictionary`2.CopyTo(System.Collections.Generic.KeyValuePair{`0,`1}[],System.Int32)">
             <summary>
-            Copies the items of the dictionary to the given array, starting at the given index
+            Copies the items of the dictionary to the given array, starting at the given mIndex
             </summary>
             <param name="array">The array to copy the items to</param>
-            <param name="arrayIndex">The index at which to start</param>
+            <param name="arrayIndex">The mIndex at which to start</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableDictionary`2.GetEnumerator">
             <summary>
@@ -1195,7 +1215,7 @@
             <summary>
             An <see cref="T:System.Collections.Generic.IList`1"/> that implements <see cref="T:BlueHeron.Collections.Generic.IObservableCollection`1"/>.
             </summary>
-            <typeparam name="T">The type of the items in the list</typeparam>
+            <typeparam name="T">The type of the items in the mList</typeparam>
         </member>
         <member name="E:BlueHeron.Collections.Generic.ObservableList`1.CollectionChanged">
             <summary>
@@ -1204,25 +1224,25 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor">
             <summary>
-            Creates a new, empty list.
+            Creates a new, empty mList.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
             <summary>
-            Creates a new list, populated with the given collection of <typeparamref name="T"/>s.
+            Creates a new mList, populated with the given collection of <typeparamref name="T"/>s.
             </summary>
             <param name="collection">A collection of <typeparamref name="T"/>s</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            Creates a new, empty list using the given <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
+            Creates a new, empty mList using the given <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
             </summary>
             <param name="serializationInfo">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="streamingContext">The <see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.Count">
             <summary>
-            Returns the number items in this list.
+            Returns the number items in this mList.
             </summary>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.IsReadOnly">
@@ -1242,45 +1262,51 @@
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.Item(System.Int32)">
             <summary>
-            Gets or sets the item at the given index.
+            Gets or sets the item at the given mIndex.
             </summary>
-            <param name="index">The index of the item</param>
+            <param name="index">The mIndex of the item</param>
             <returns>The item</returns>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.SerializationInfo">
             <summary>
-            The current <see cref="T:System.Runtime.Serialization.SerializationInfo"/>
+            The mCurrent <see cref="T:System.Runtime.Serialization.SerializationInfo"/>
             </summary>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.StreamingContext">
             <summary>
-            The current <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
+            The mCurrent <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Add(`0)">
             <summary>
-            Adds an item to the list.
+            Adds an item to the mList.
             </summary>
             <param name="item">The item</param>
         </member>
+        <member name="M:BlueHeron.Collections.Generic.ObservableList`1.AsAsyncEnumerable">
+            <summary>
+            Returns this list as an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1"/>.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1"/></returns>
+        </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Clear">
             <summary>
-            Removes all items from the list.
+            Removes all items from the mList.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Contains(`0)">
             <summary>
-            Determines whether the list contains a specific item.
+            Determines whether the mList contains a specific item.
             </summary>
             <param name="item">An item of type <typeparamref name="T"/></param>
-            <returns>Boolean, true if the item exists in the list</returns>
+            <returns>Boolean, true if the item exists in the mList</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.CopyTo(`0[],System.Int32)">
             <summary>
-            Copies the items of the list to the given array, starting at the given index
+            Copies the items of the mList to the given array, starting at the given mIndex
             </summary>
             <param name="array">The array to copy the items to</param>
-            <param name="arrayIndex">The index at which to start</param>
+            <param name="arrayIndex">The mIndex at which to start</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.GetEnumerator">
             <summary>
@@ -1290,28 +1316,28 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.IndexOf(`0)">
             <summary>
-            Returns the index of the item in the list.
+            Returns the mIndex of the item in the mList.
             </summary>
             <param name="item">The item</param>
-            <returns>The index</returns>
+            <returns>The mIndex</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Insert(System.Int32,`0)">
             <summary>
-            Inserts the item at the given index.
+            Inserts the item at the given mIndex.
             </summary>
-            <param name="index">The index</param>
+            <param name="index">The mIndex</param>
             <param name="item">The item</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Remove(`0)">
             <summary>
-            Removes the item from the list.
+            Removes the item from the mList.
             </summary>
             <param name="item">The item</param>
             <returns>Boolean, true if the operation was successful</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.RemoveAt(System.Int32)">
             <summary>
-            Removes the item at the given index from the list.
+            Removes the item at the given mIndex from the mList.
             </summary>
             <param name="index">The <paramref name="index"/>of the item</param>
             <returns>Boolean, true if the operation was successful</returns>
@@ -1345,14 +1371,14 @@
             Gets the internal array of a <see cref="T:System.Collections.Generic.List`1"/>.
             </summary>
             <typeparam name="T">The type of the elements.</typeparam>
-            <param name="list">The respective list.</param>
-            <returns>The internal array of the list.</returns>
+            <param name="list">The respective mList.</param>
+            <returns>The internal array of the mList.</returns>
         </member>
         <member name="M:BlueHeron.Collections.Extensions.GetArrayByType``1(System.Collections.Generic.IList{``0})">
             <summary>
-            Returns the list as a typed array.
+            Returns the mList as a typed array.
             </summary>
-            <typeparam name="T">The type of the lements in the list</typeparam>
+            <typeparam name="T">The type of the lements in the mList</typeparam>
             <param name="list">An <see cref="T:System.Collections.Generic.IList`1"/></param>
             <returns>A array of elements of type T</returns>
         </member>
@@ -1375,18 +1401,18 @@
             <summary> 
             Creates a StringTokenizer with the given <see cref="T:System.IFormatProvider"/>.
             If the IFormatProvider is null, use the thread's IFormatProvider info. 
-            ',' is used as the list separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
+            ',' is used as the mList separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
             </summary> 
             <param name="str">The string to tokenize</param>
             <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> which controls this tokenization</param> 
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.#ctor(System.String,System.Char,System.Char)">
             <summary>
-            Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the list separator.
+            Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the mList separator.
             </summary> 
             <param name="str">The string to tokenize</param>
             <param name="quoteChar">The quote character</param> 
-            <param name="separator">The list separator</param> 
+            <param name="separator">The mList separator</param> 
         </member>
         <member name="P:BlueHeron.Collections.StringTokenizer.IsSeparatorFound">
             <summary>
@@ -1395,13 +1421,13 @@
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.GetCurrentToken">
             <summary>
-            Returns the current token if present, else null.
+            Returns the mCurrent token if present, else null.
             </summary>
-            <returns>A <see cref="T:System.String"/>, representing the current token</returns>
+            <returns>A <see cref="T:System.String"/>, representing the mCurrent token</returns>
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.GetNumericListSeparator(System.IFormatProvider)">
             <summary>
-            Get the numeric list separator for a given IFormatProvider.
+            Get the numeric mList separator for a given IFormatProvider.
             Separator is a comma [,] if the decimal separator is not a comma, else a semicolon [;] is used.
             </summary>
             <param name="provider">The <see cref="T:System.IFormatProvider"/> to use</param>
@@ -1443,11 +1469,11 @@
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.Initialize(System.String,System.Char,System.Char)">
             <summary>
-            Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the list separator.
+            Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the mList separator.
             </summary> 
             <param name="str">The string to tokenize</param>
             <param name="quoteChar">The quote char</param> 
-            <param name="separator">The list separator</param> 
+            <param name="separator">The mList separator</param> 
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.ScanToNextToken(System.Char)">
             <summary>
