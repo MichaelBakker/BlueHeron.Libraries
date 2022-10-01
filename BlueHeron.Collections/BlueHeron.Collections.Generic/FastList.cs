@@ -900,7 +900,7 @@ namespace BlueHeron.Collections.Generic
 			private T mCurrent;
 			private int mIndex;
 			private readonly FastList<T> mList;
-			private readonly CancellationToken mToken;
+			private readonly CancellationToken? mToken;
 
 			#endregion
 
@@ -945,6 +945,7 @@ namespace BlueHeron.Collections.Generic
 			/// <summary>
 			/// Gets the current item.
 			/// </summary>
+			[Obsolete]
 			object IEnumerator.Current => mCurrent;
 
 			#endregion
@@ -972,7 +973,10 @@ namespace BlueHeron.Collections.Generic
 			/// <returns>A <see cref="ValueTask{Boolean}"/></returns>
 			public ValueTask<bool> MoveNextAsync()
 			{
-				mToken.ThrowIfCancellationRequested();
+				if (mToken.HasValue && mToken.Value.IsCancellationRequested)
+				{
+					return ValueTask.FromCanceled<bool>(mToken.Value);
+				}
 				return ValueTask.FromResult(MoveNext());
 			}
 
