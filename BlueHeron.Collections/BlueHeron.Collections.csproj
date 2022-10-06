@@ -80,11 +80,6 @@
 	  <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Remove="Util\**" />
-	  <EmbeddedResource Remove="Util\**" />
-	  <None Remove="Util\**" />
-	</ItemGroup>
-	<ItemGroup>
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
 	  <PackageReference Include="System.Linq.Async" Version="6.0.1" />
 	</ItemGroup>

@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <RootNamespace>BlueHeron</RootNamespace>
+	  <TargetFramework>net7.0</TargetFramework>
+	  <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
+	  <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
+	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	  <SignAssembly>true</SignAssembly>
+	  <AssemblyOriginatorKeyFile>bb.snk</AssemblyOriginatorKeyFile>
+	  <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+	  <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+	  <WarningLevel>1</WarningLevel>
+	  <Platforms>AnyCPU;x64;x86</Platforms>
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NoWarn />
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<LangVersion>preview</LangVersion>
+		<CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+		<Optimize>true</Optimize>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+		<DefineConstants>DEBUG</DefineConstants>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<DocumentationFile>BlueHeron.Math.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+		<NoWarn />
+		<PlatformTarget>x86</PlatformTarget>
+		<LangVersion>preview</LangVersion>
+		<CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+		<Optimize>true</Optimize>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+		<DefineConstants>DEBUG</DefineConstants>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<DocumentationFile>BlueHeron.Math.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<NoWarn />
+		<PlatformTarget>x64</PlatformTarget>
+		<LangVersion>preview</LangVersion>
+		<CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+		<Optimize>true</Optimize>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+		<DefineConstants>DEBUG</DefineConstants>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<DocumentationFile>BlueHeron.Math.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn />
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<LangVersion>preview</LangVersion>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<DocumentationFile>BlueHeron.Math.xml</DocumentationFile>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+		<NoWarn />
+		<PlatformTarget>x86</PlatformTarget>
+		<LangVersion>preview</LangVersion>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<DocumentationFile>BlueHeron.Math.xml</DocumentationFile>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<NoWarn />
+		<PlatformTarget>x64</PlatformTarget>
+		<LangVersion>preview</LangVersion>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<DocumentationFile>BlueHeron.Math.xml</DocumentationFile>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	</PropertyGroup>
+</Project>
