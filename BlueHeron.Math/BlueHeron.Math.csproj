@@ -79,4 +79,7 @@
 		<DebugType>full</DebugType>
 		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Folder Include="Numerics\LinearAlgebra\Interfaces\" />
+	</ItemGroup>
 </Project>

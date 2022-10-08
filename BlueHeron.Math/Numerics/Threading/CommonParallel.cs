@@ -28,10 +28,9 @@
 // </copyright>
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using BlueHeron.Math.Numerics;
 
 namespace BlueHeron.Math.Numerics.Threading
 {

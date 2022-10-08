@@ -39,14 +39,38 @@ public static class Constants
 	/// <summary>Invalid parameterization for the distribution.</summary>
 	internal const string errInvalidParameterization = "Invalid parameterization for the distribution.";
 
+	/// <summary>The chosen parameter set is invalid (probably some value is out of range).</summary>
+	internal const string errInvalidParameterSet = "The chosen parameter set is invalid (probably some value is out of range).";
+
+	/// <summary>The integer array does not represent a valid permutation.</summary>
+	internal const string errInvalidPermutation = "The integer array does not represent a valid permutation.";
+
+	/// <summary>The number of columns of a matrix must be non-negative.</summary>
+	internal const string errMatrixColCount = "The number of columns of a matrix must be non-negative.";
+
+	/// <summary>Matrices can not be empty and must have at least one row and column.</summary>
+	internal const string errMatrixEmpty = "Matrices can not be empty and must have at least one row and column.";
+
+	/// <summary>The number of rows of a matrix must be non-negative.</summary>
+	internal const string errMatrixRowCount = "The number of rows of a matrix must be non-negative.";
+
+	/// <summary>Numerical estimation of the statistic has failed. The used solver did not succeed in finding a root.</summary>
+	internal const string errRootSolver = "Numerical estimation of the statistic has failed. The used solver did not succeed in finding a root.";
+
+	/// <summary>The algorithm has failed, exceeded the number of iterations allowed or there is no root within the provided bounds. Consider using RobustNewtonRaphson instead.</summary>
+	internal const string errRootSolverInternal = "The algorithm has failed, exceeded the number of iterations allowed or there is no root within the provided bounds. Consider using RobustNewtonRaphson instead.";
+
 	/// <summary>Value must be positive (and not zero).</summary>
 	internal const string errValueGtZero = "Value must be positive (and not zero).";
 
 	/// <summary>Value must be positive.</summary>
 	internal const string errValuePositive = "Value must be positive.";
 
-	/// <summary>The chosen parameter set is invalid (probably some value is out of range).</summary>
-	internal const string errInvalidParameterSet = "The chosen parameter set is invalid (probably some value is out of range).";
+	/// <summary>Value must not be negative (zero is ok).</summary>
+	internal const string errValuePositiveOrZero = "Value must not be negative (zero is ok).";
+
+	/// <summary>All vectors must have the same dimensionality.</summary>
+	internal const string errVectorDimensionality = "All vectors must have the same dimensionality.";
 
 	#endregion
 
