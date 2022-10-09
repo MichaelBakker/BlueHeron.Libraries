@@ -147,7 +147,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	/// <returns>An <see cref="IAsyncEnumerable{T}"/></returns>
 	public IAsyncEnumerable<T> AsAsyncEnumerable()
 	{
-		return mList;
+		return mList.ToAsyncEnumerable<T>();
 	}
 
 	/// <summary>
