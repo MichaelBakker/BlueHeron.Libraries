@@ -134,13 +134,13 @@
         </member>
         <member name="T:BlueHeron.Collections.Generic.Extendo">
             <summary>
-            Adapted from: https://weblog.west-wind.com/posts/2012/feb/08/creating-a-dynamic-extensible-c-expando-object.
-            Class that provides extensible properties and methods. This dynamic object stores 'extra' properties in a mDictionary or checks the actual properties of the instance.
-            This means you can subclass this expando and retrieve either native properties or properties from values in the mDictionary.
-            This type allows you three ways to access its properties:
-                Directly: any explicitly declared properties are accessible
-                Dynamic: dynamic cast allows access to mDictionary and native properties/methods
-                Dictionary: Any of the extended properties are accessible via IDictionary interface
+            A <see cref="T:System.Dynamic.DynamicObject"/> that provides extensible properties and methods.
+            This <see cref="T:System.Dynamic.DynamicObject"/> stores 'extra' properties in a dictionary or checks the actual properties of the instance.
+            This means this extendo can be subclassed and either native properties or properties from values in the dictionary can be retrieved.
+            Three ways to access properties are available:
+            	Directly: any explicitly declared properties are accessible
+            	Dynamic: dynamic cast allows access to dictionary and native properties/methods
+            	Dictionary: Any of the extended properties are accessible through the <see cref="T:System.Collections.Generic.IDictionary`2"/> interface
             </summary>
         </member>
         <member name="F:BlueHeron.Collections.Generic.Extendo.mInstance">
@@ -1366,19 +1366,11 @@
             Extension functions for collections.
             </summary>
         </member>
-        <member name="M:BlueHeron.Collections.Extensions.GetArray``1(System.Collections.Generic.List{``0})">
-            <summary>
-            Gets the internal array of a <see cref="T:System.Collections.Generic.List`1"/>.
-            </summary>
-            <typeparam name="T">The type of the elements.</typeparam>
-            <param name="list">The respective mList.</param>
-            <returns>The internal array of the mList.</returns>
-        </member>
         <member name="M:BlueHeron.Collections.Extensions.GetArrayByType``1(System.Collections.Generic.IList{``0})">
             <summary>
-            Returns the mList as a typed array.
+            Returns the list as a typed array, optimized for <see cref="T:BlueHeron.Collections.Generic.FastList`1"/> and array possibility.
             </summary>
-            <typeparam name="T">The type of the lements in the mList</typeparam>
+            <typeparam name="T">The type of the elements in the list</typeparam>
             <param name="list">An <see cref="T:System.Collections.Generic.IList`1"/></param>
             <returns>A array of elements of type T</returns>
         </member>
