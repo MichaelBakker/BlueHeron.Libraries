@@ -8,10 +8,11 @@
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>bb.snk</AssemblyOriginatorKeyFile>
 		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-		<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+		<RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
 		<WarningLevel>1</WarningLevel>
 		<Platforms>AnyCPU;x64;x86</Platforms>
 		<PlatformTarget>AnyCPU</PlatformTarget>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<NoWarn />
