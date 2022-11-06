@@ -26,8 +26,5 @@ public interface IObservableCollection<T> : IReadOnlyCollection<T>
     /// <summary>
     /// Object, needed to ensure thread safety.
     /// </summary>
-    object SyncRoot
-    {
-        get;
-    }
+    object SyncRoot { get; }
 }

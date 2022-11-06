@@ -8,7 +8,7 @@ namespace BlueHeron.Collections.Generic;
 /// <summary>
 /// An <see cref="IList{T}"/> that implements <see cref="IObservableCollection{T}"/>.
 /// </summary>
-/// <typeparam name="T">The type of the items in the mList</typeparam>
+/// <typeparam name="T">The type of the items in the list</typeparam>
 public class ObservableList<T> : IList<T>, IObservableCollection<T>
 {
 	#region Objects and variables
@@ -27,7 +27,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	#region Construction
 
 	/// <summary>
-	/// Creates a new, empty mList.
+	/// Creates a new, empty list.
 	/// </summary>
 	public ObservableList()
 	{
@@ -35,7 +35,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Creates a new mList, populated with the given collection of <typeparamref name="T"/>s.
+	/// Creates a new list, populated with the given collection of <typeparamref name="T"/>s.
 	/// </summary>
 	/// <param name="collection">A collection of <typeparamref name="T"/>s</param>
 	public ObservableList(IEnumerable<T> collection)
@@ -44,7 +44,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Creates a new, empty mList using the given <see cref="System.Runtime.Serialization.StreamingContext"/>.
+	/// Creates a new, empty list using the given <see cref="System.Runtime.Serialization.StreamingContext"/>.
 	/// </summary>
 	/// <param name="serializationInfo">The <see cref="System.Runtime.Serialization.SerializationInfo"/></param>
 	/// <param name="streamingContext">The <see cref="System.Runtime.Serialization.StreamingContext"/></param>
@@ -59,7 +59,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	#region Properties
 
 	/// <summary>
-	/// Returns the number items in this mList.
+	/// Returns the number of items in this list.
 	/// </summary>
 	public int Count
 	{
@@ -88,9 +88,9 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	public object SyncRoot { get; } = new object();
 
 	/// <summary>
-	/// Gets or sets the item at the given mIndex.
+	/// Gets or sets the item at the given index.
 	/// </summary>
-	/// <param name="index">The mIndex of the item</param>
+	/// <param name="index">The index of the item</param>
 	/// <returns>The item</returns>
 	public T this[int index]
 	{
@@ -114,12 +114,12 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// The mCurrent <see cref="System.Runtime.Serialization.SerializationInfo"/>
+	/// The current <see cref="System.Runtime.Serialization.SerializationInfo"/>
 	/// </summary>
 	public SerializationInfo SerializationInfo { get; }
 
 	/// <summary>
-	/// The mCurrent <see cref="System.Runtime.Serialization.StreamingContext"/>.
+	/// The current <see cref="System.Runtime.Serialization.StreamingContext"/>.
 	/// </summary>
 	public StreamingContext StreamingContext { get; }
 
@@ -128,7 +128,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	#region Public methods and functions
 
 	/// <summary>
-	/// Adds an item to the mList.
+	/// Adds the given item to the list.
 	/// </summary>
 	/// <param name="item">The item</param>
 	public void Add(T item)
@@ -151,7 +151,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Removes all items from the mList.
+	/// Clears the list of all items.
 	/// </summary>
 	public void Clear()
 	{
@@ -164,10 +164,10 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Determines whether the mList contains a specific item.
+	/// Checks if the list contains the given item.
 	/// </summary>
 	/// <param name="item">An item of type <typeparamref name="T"/></param>
-	/// <returns>Boolean, true if the item exists in the mList</returns>
+	/// <returns>Boolean, true if the item is present in the list</returns>
 	public bool Contains(T item)
 	{
 		lock (SyncRoot)
@@ -177,10 +177,10 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Copies the items of the mList to the given array, starting at the given mIndex
+	/// Copies the items in this list to the given array, starting at the given index.
 	/// </summary>
 	/// <param name="array">The array to copy the items to</param>
-	/// <param name="arrayIndex">The mIndex at which to start</param>
+	/// <param name="arrayIndex">The index at which to start</param>
 	public void CopyTo(T[] array, int arrayIndex)
 	{
 		lock (SyncRoot)
@@ -205,19 +205,19 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Returns the mIndex of the item in the mList.
+	/// Returns the index in this list of the first instance of the given item.
 	/// </summary>
 	/// <param name="item">The item</param>
-	/// <returns>The mIndex</returns>
+	/// <returns>The zero-based index of the first occurrence of this item if found, otherwise -1</returns>
 	public int IndexOf(T item)
 	{
 		return mList.IndexOf(item);
 	}
 
 	/// <summary>
-	/// Inserts the item at the given mIndex.
+	/// Inserts the given item at the given index in the list.
 	/// </summary>
-	/// <param name="index">The mIndex</param>
+	/// <param name="index">The index</param>
 	/// <param name="item">The item</param>
 	public void Insert(int index, T item)
 	{
@@ -225,7 +225,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Removes the item from the mList.
+	/// Removes the given item from the list.
 	/// </summary>
 	/// <param name="item">The item</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
@@ -244,9 +244,9 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Removes the item at the given mIndex from the mList.
+	/// Removes the item at the given index from the list.
 	/// </summary>
-	/// <param name="index">The <paramref name="index"/>of the item</param>
+	/// <param name="index">The index of the item</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
 	public void RemoveAt(int index)
 	{
@@ -254,9 +254,9 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	}
 
 	/// <summary>
-	/// Replace the old item with a new item.
+	/// Replaces the given item with a new item.
 	/// </summary>
-	/// <param name="oldItem">The old item</param>
+	/// <param name="oldItem">The item to replace</param>
 	/// <param name="newItem">The new item</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
 	public bool Replace(T oldItem, T newItem)

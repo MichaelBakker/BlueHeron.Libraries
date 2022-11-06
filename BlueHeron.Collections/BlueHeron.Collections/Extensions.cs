@@ -1,6 +1,6 @@
-﻿using BlueHeron.Collections.Generic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using BlueHeron.Collections.Generic;
 
 namespace BlueHeron.Collections
 {
@@ -12,44 +12,25 @@ namespace BlueHeron.Collections
 		#region Collections
 
 		/// <summary>
-		/// Returns the list as a typed array, optimized for <see cref="FastList{T}"/> and array possibility.
+		/// Returns the <see cref="IList{T}"/> as a typed array, optimized for the possibility that the <see cref="IList{T}"/> may be a <see cref="FastList{T}"/> or a <typeparamref name="T"/>[].
 		/// </summary>
 		/// <typeparam name="T">The type of the elements in the list</typeparam>
 		/// <param name="list">An <see cref="IList{T}"/></param>
 		/// <returns>A array of elements of type T</returns>
-		public static T[] GetArrayByType<T>(this IList<T> list)
+		public static T[] AsTypedArray<T>(this IList<T> list)
 		{
-			T[] array;
 			if (list is T[] t)
 			{
-				array = t;
+				return t;
 			}
 			else if (list is FastList<T> f)
 			{
-				array = f.Items;
+				return f.Items;
 			}
 			else
 			{
-				array = list.ToArray();
+				return list.ToArray();
 			}
-			return array;
-		}
-
-		/// <summary>
-		/// Tries to get a value from a <see cref="IDictionary{K,V}"/>.
-		/// </summary>
-		/// <typeparam name="K">The type of the key</typeparam>
-		/// <typeparam name="V">The type of the value</typeparam>
-		/// <param name="dict">The respective dictionary</param>
-		/// <param name="key">The respective key</param>
-		/// <returns>The value if it exists, else <c>null</c>.</returns>
-		public static V Get<K, V>(this IDictionary<K, V> dict, K key)
-		{
-			if (dict.TryGetValue(key, out var val))
-			{
-				return val;
-			}
-			return default;
 		}
 
 		#endregion

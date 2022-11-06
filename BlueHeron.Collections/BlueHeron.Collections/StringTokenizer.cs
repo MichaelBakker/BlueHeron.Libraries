@@ -34,7 +34,7 @@ namespace BlueHeron.Collections
 		/// <summary> 
 		/// Creates a StringTokenizer with the given <see cref="IFormatProvider"/>.
 		/// If the IFormatProvider is null, use the thread's IFormatProvider info. 
-		/// ',' is used as the mList separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
+		/// ',' is used as the list separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
 		/// </summary> 
 		/// <param name="str">The string to tokenize</param>
 		/// <param name="formatProvider">The <see cref="IFormatProvider"/> which controls this tokenization</param> 
@@ -45,11 +45,11 @@ namespace BlueHeron.Collections
 		}
 
 		/// <summary>
-		/// Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the mList separator.
+		/// Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the list separator.
 		/// </summary> 
 		/// <param name="str">The string to tokenize</param>
 		/// <param name="quoteChar">The quote character</param> 
-		/// <param name="separator">The mList separator</param> 
+		/// <param name="separator">The list separator</param> 
 		public StringTokenizer(string str, char quoteChar, char separator)
 		{
 			Initialize(str, quoteChar, separator);
@@ -74,7 +74,7 @@ namespace BlueHeron.Collections
 		/// <returns>A <see cref="string"/>, representing the mCurrent token</returns>
 		public string GetCurrentToken()
 		{            
-			if (mCurTokenIndex < 0) // if no mCurrent token, return null 
+			if (mCurTokenIndex < 0) // if no current token, return null 
 			{
 				return null;
 			}
@@ -82,7 +82,7 @@ namespace BlueHeron.Collections
 		}
 
 		/// <summary>
-		/// Get the numeric mList separator for a given IFormatProvider.
+		/// Get the numeric list separator for a given IFormatProvider.
 		/// Separator is a comma [,] if the decimal separator is not a comma, else a semicolon [;] is used.
 		/// </summary>
 		/// <param name="provider">The <see cref="IFormatProvider"/> to use</param>
@@ -98,17 +98,6 @@ namespace BlueHeron.Collections
 			}
 			return numericSeparator;
 		}
-
-		///// <summary> 
-		///// Throws an exception if there is any non-whitespace left unparsed.
-		///// </summary> 
-		//public void LastTokenRequired()
-		//{
-		//    if (mCharIndex != mLength)
-		//    {
-		//        throw new InvalidOperationException("TokenizerHelperExtraDataEncountered");
-		//    }
-		//}
 
 		/// <summary> 
 		/// Advances to the next token.
@@ -237,11 +226,11 @@ namespace BlueHeron.Collections
 		#region Private methods and functions
 
 		/// <summary>
-		/// Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the mList separator.
+		/// Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the list separator.
 		/// </summary> 
 		/// <param name="str">The string to tokenize</param>
 		/// <param name="quoteChar">The quote char</param> 
-		/// <param name="separator">The mList separator</param> 
+		/// <param name="separator">The list separator</param> 
 		private void Initialize(string str, char quoteChar, char separator)
 		{
 			mString = str;
@@ -261,10 +250,10 @@ namespace BlueHeron.Collections
 		}
 
 		/// <summary>
-		/// Helper to move the mCharIndex to the next token or to the end of the string.
+		/// Helper to move the char index to the next token or to the end of the string.
 		/// </summary>
 		/// <param name="separator">The separator character</param>
-		/// <exception cref="InvalidOperationException">Emty token or extra data encountered</exception>
+		/// <exception cref="InvalidOperationException">Empty token or extra data encountered</exception>
 		private void ScanToNextToken(char separator)
 		{
 			if (mCharIndex < mLength) // If already at end of the string don't bother
@@ -310,6 +299,5 @@ namespace BlueHeron.Collections
 		}
 
 		#endregion
-
 	}
 }

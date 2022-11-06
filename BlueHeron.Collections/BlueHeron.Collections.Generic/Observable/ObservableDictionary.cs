@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace BlueHeron.Collections.Generic;
 
 /// <summary>
-/// A <see cref="IDictionary{TKey, TValue}"/> that implements <see cref="IObservableCollection{T}"/>.
+/// An <see cref="IDictionary{TKey, TValue}"/> that implements <see cref="IObservableCollection{T}"/> where T is a <see cref="KeyValuePair{TKey, TValue}"/>.
 /// </summary>
 /// <typeparam name="TKey">The type of the key</typeparam>
 /// <typeparam name="TValue">The type of the value</typeparam>
