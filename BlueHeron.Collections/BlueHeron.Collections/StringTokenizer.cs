@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace BlueHeron.Collections
 {
 	/// <summary>
 	/// Tokenizes a string into a collection of values.
 	/// </summary>
-	public class StringTokenizer
+	public partial class StringTokenizer
 	{
 		#region Objects and variables
 
@@ -26,6 +29,12 @@ namespace BlueHeron.Collections
 		private char mQuoteChar;
 		private bool mSeparatorFound;
 		private string mString;
+
+		/// <summary>
+		/// The <see cref="Regex"/> to use to split text into words.
+		/// </summary>
+		[GeneratedRegex("(\\W+)")]
+		private static partial Regex mRegexWords();
 
 		#endregion
 
@@ -92,7 +101,7 @@ namespace BlueHeron.Collections
 			var numericSeparator = _COMMA;
 			var numberFormat = NumberFormatInfo.GetInstance(provider); // Get the NumberFormatInfo out of the provider, if possible. If the IFormatProvider doesn't not contain a NumberFormatInfo, then this method returns the mCurrent culture's NumberFormatInfo
 
-			if ((numberFormat.NumberDecimalSeparator.Length > 0) && (numericSeparator == numberFormat.NumberDecimalSeparator[0])) // If the decimal separator is the same as the mList separator, use the ";"
+			if (numberFormat.NumberDecimalSeparator.Length > 0 && numericSeparator == numberFormat.NumberDecimalSeparator[0]) // If the decimal separator is the same as the mList separator, use the ";"
 			{
 				numericSeparator = _SEMICOLON;
 			}
@@ -191,7 +200,7 @@ namespace BlueHeron.Collections
 						}
 					}
 				}
-				else if ((char.IsWhiteSpace(currentChar)) || (currentChar == separator))
+				else if (char.IsWhiteSpace(currentChar) || currentChar == separator)
 				{
 					if (currentChar == separator)
 					{
@@ -219,6 +228,16 @@ namespace BlueHeron.Collections
 				throw new InvalidOperationException(errEmptyToken);
 			}
 			return true;
+		}
+
+		/// <summary>
+		/// Simply tokenizes a string into words (where word is the regex definition of a word).
+		/// </summary>
+		/// <param name="input">The string to tokenize</param>
+		/// <returns>An <see cref="IEnumerable{String}"/></returns>
+		public static IEnumerable<string> Split(string input)
+		{
+			return mRegexWords().Split(input).AsEnumerable();
 		}
 
 		#endregion

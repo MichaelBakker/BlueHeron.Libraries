@@ -16,7 +16,7 @@
             <summary>
             Gets or sets the value with the specified keys.
             </summary>
-            <value>The value</value>
+            <value>The value, which is either added or updated</value>
         </member>
         <member name="P:BlueHeron.Collections.Generic.DoubleKeyDictionary`3.OuterDictionary">
             <summary>
@@ -33,7 +33,7 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.DoubleKeyDictionary`3.Clear">
             <summary>
-            Clears this dictionary.
+            Clears this dictionary of all items.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.DoubleKeyDictionary`3.ContainsKey(`0,`1)">
@@ -65,7 +65,7 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.DoubleKeyDictionary`3.System#Collections#IEnumerable#GetEnumerator">
             <summary>
-            Returns an enumerator that iterates through a collection.
+            Returns an enumerator that iterates through the collection.
             </summary>
             <returns>
             An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
@@ -145,7 +145,7 @@
         </member>
         <member name="F:BlueHeron.Collections.Generic.Extendo.mInstance">
             <summary>
-            Instance of object passed in.
+            Instance of an object passed in.
             </summary>
         </member>
         <member name="F:BlueHeron.Collections.Generic.Extendo.mInstanceType">
@@ -155,17 +155,17 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.#ctor">
             <summary>
-            This constructor just works off the internal mDictionary and any public properties of this object.
+            This constructor just works off the internal dictionary and any public properties of this object.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.#ctor(System.Object)">
             <summary>
-            Constructor that allows passing in an existing instance variable to 'extend'.        
+            Constructor that allows passing in an existing object instance to 'extend'.        
             </summary>
             <remarks>
             You can pass in null here if you don't want to check native properties and only check the Dictionary.
             </remarks>
-            <param name="instance">The instance variable</param>
+            <param name="instance">Instance of the object to extend</param>
         </member>
         <member name="P:BlueHeron.Collections.Generic.Extendo.InstancePropertyInfo">
             <summary>
@@ -179,7 +179,7 @@
         </member>
         <member name="P:BlueHeron.Collections.Generic.Extendo.Item(System.String)">
             <summary>
-            Convenience method that provides a string Indexer to the Properties collection AND the strongly typed properties of the object by name.
+            Convenience method that provides a string Indexer to the Properties collection AND the strongly typed properties of the passed in object, by name.
             <code>
             // dynamic
             exp["Address"] = "112 nowhere lane"; 
@@ -188,8 +188,8 @@
             </code>
             </summary>
             <remarks>
-            The getter checks the Properties mDictionary first then looks in PropertyInfo for properties.
-            The setter checks the instance properties before checking the Properties mDictionary.
+            The getter checks the Properties dictionary first and then looks in PropertyInfo[] for properties.
+            The setter checks the instance properties before checking the Properties dictionary.
             </remarks>
             <param name="key">The name of the property</param> 
             <returns>An object</returns>
@@ -204,7 +204,7 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)">
             <summary>
-            Try to retrieve a member by name first from instance properties followed by the collection entries.
+            Tries to retrieve a member by name first from instance properties followed by the collection entries.
             </summary>
             <param name="binder">The <see cref="T:System.Dynamic.GetMemberBinder"/></param>
             <param name="result">The member, if found</param>
@@ -221,7 +221,7 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.TrySetMember(System.Dynamic.SetMemberBinder,System.Object)">
             <summary>
-            Property setter implementation tries to retrieve value from instance first then into this object.
+            Property setter implementation that tries to set the value on the passed in instance first then into this object.
             </summary>
             <param name="binder">The <see cref="T:System.Dynamic.SetMemberBinder"/></param>
             <param name="value">The value to set</param>
@@ -702,13 +702,13 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
             <summary>
-            Returns an <see cref="T:System.Collections.Generic.IEnumerator`1"/> for this mList.
+            Returns an <see cref="T:System.Collections.Generic.IEnumerator`1"/> for this list.
             </summary>
             <returns>An <see cref="T:System.Collections.Generic.IEnumerator`1"/></returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.FastList`1.System#Collections#IEnumerable#GetEnumerator">
             <summary>
-            Returns an <see cref="T:System.Collections.IEnumerator"/> for this mList.
+            Returns an <see cref="T:System.Collections.IEnumerator"/> for this list.
             </summary>
             <returns>An <see cref="T:System.Collections.IEnumerator"/></returns>
         </member>
@@ -768,6 +768,35 @@
             Moves the enumerator to the beginning of the list, setting <see cref="P:BlueHeron.Collections.Generic.FastList`1.Enumerator.Current"/> to null.
             </summary>
         </member>
+        <member name="T:BlueHeron.Collections.Generic.IPrioritizedCollection`2">
+            <summary>
+            A collection that returns items based on their priority.
+            </summary>
+            <typeparam name="P">The type of the key</typeparam>
+            <typeparam name="V">The type of the value</typeparam>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.IPrioritizedCollection`2.Count">
+            <summary>
+            Returns the number of elements in the collection.
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.IPrioritizedCollection`2.HasElements">
+            <summary>
+            Determines whether there are one or more elements in the collection.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.IPrioritizedCollection`2.Add(`0,`1)">
+            <summary>
+            Adds an element to the collection.
+            </summary>
+            <param name="priority">The priority</param>
+            <param name="value">The element</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.IPrioritizedCollection`2.Get">
+            <summary>
+            Retrieves the next item from the collection.
+            </summary>
+        </member>
         <member name="T:BlueHeron.Collections.Generic.MappingCollection`3">
             <summary>
             Object that maps indexes to names and vice versa, and maps indexes to values.
@@ -788,17 +817,17 @@
         </member>
         <member name="P:BlueHeron.Collections.Generic.MappingCollection`3.Keys">
             <summary>
-            Returns all indexes in the collection.
+            Returns all indices in the collection.
             </summary>
         </member>
         <member name="P:BlueHeron.Collections.Generic.MappingCollection`3.MappingArray">
             <summary>
-            Returns the mIndex to name mappings as array of <see cref="T:System.Collections.Generic.KeyValuePair`2"/>s.
+            Returns the index to name mappings as array of <see cref="T:System.Collections.Generic.KeyValuePair`2"/>s.
             </summary>
         </member>
         <member name="P:BlueHeron.Collections.Generic.MappingCollection`3.Item(`0)">
             <summary>
-            Returns the value with the given key (i.e. mIndex).
+            Returns the value with the given key (i.e. index).
             </summary>
             <param name="key">The <typeparamref name="TIndex"/> of the value</param>
             <returns>A <typeparamref name="TValue"/></returns>
@@ -898,7 +927,7 @@
             <summary>
             Creates a new, empty NumberCollection with the given capacity.
             </summary>
-            <param name="capacity">The capacity of the mList</param>
+            <param name="capacity">The capacity of the list</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.NumberCollection`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
             <summary>
@@ -938,7 +967,7 @@
             </summary>
             <param name="objectGenerator">The <see cref="T:System.Func`1"/> that creates the object of type <typeparamref name="T"/></param>
             <param name="maxCapacity">The capacity of the pool</param>
-            <exception cref="T:System.ArgumentNullException">Paramater objectGenerator cannot be null</exception>
+            <exception cref="T:System.ArgumentNullException">Parameter objectGenerator cannot be null</exception>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObjectPool`1.Get">
             <summary>
@@ -1016,14 +1045,14 @@
             <summary>
             Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents an <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Add"/> operation.
             </summary>
-            <param name="newItem">The new item</param>
+            <param name="newItem">The added item</param>
             <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Remove(`0)">
             <summary>
             Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents a <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Remove"/> operation.
             </summary>
-            <param name="oldItem">The old item</param>
+            <param name="oldItem">The removed item</param>
             <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Replace(`0,`0)">
@@ -1036,13 +1065,13 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Reset">
             <summary>
-            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents an <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Reset"/> operation.
+            Creates a new <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/> that represents a <see cref="F:System.Collections.Specialized.NotifyCollectionChangedAction.Reset"/> operation.
             </summary>
             <returns>A <see cref="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1"/></returns>
         </member>
         <member name="T:BlueHeron.Collections.Generic.ObservableDictionary`2">
             <summary>
-            A <see cref="T:System.Collections.Generic.IDictionary`2"/> that implements <see cref="T:BlueHeron.Collections.Generic.IObservableCollection`1"/>.
+            An <see cref="T:System.Collections.Generic.IDictionary`2"/> that implements <see cref="T:BlueHeron.Collections.Generic.IObservableCollection`1"/> where T is a <see cref="T:System.Collections.Generic.KeyValuePair`2"/>.
             </summary>
             <typeparam name="TKey">The type of the key</typeparam>
             <typeparam name="TValue">The type of the value</typeparam>
@@ -1215,7 +1244,7 @@
             <summary>
             An <see cref="T:System.Collections.Generic.IList`1"/> that implements <see cref="T:BlueHeron.Collections.Generic.IObservableCollection`1"/>.
             </summary>
-            <typeparam name="T">The type of the items in the mList</typeparam>
+            <typeparam name="T">The type of the items in the list</typeparam>
         </member>
         <member name="E:BlueHeron.Collections.Generic.ObservableList`1.CollectionChanged">
             <summary>
@@ -1224,25 +1253,25 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor">
             <summary>
-            Creates a new, empty mList.
+            Creates a new, empty list.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
             <summary>
-            Creates a new mList, populated with the given collection of <typeparamref name="T"/>s.
+            Creates a new list, populated with the given collection of <typeparamref name="T"/>s.
             </summary>
             <param name="collection">A collection of <typeparamref name="T"/>s</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            Creates a new, empty mList using the given <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
+            Creates a new, empty list using the given <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
             </summary>
             <param name="serializationInfo">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="streamingContext">The <see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.Count">
             <summary>
-            Returns the number items in this mList.
+            Returns the number of items in this list.
             </summary>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.IsReadOnly">
@@ -1262,24 +1291,24 @@
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.Item(System.Int32)">
             <summary>
-            Gets or sets the item at the given mIndex.
+            Gets or sets the item at the given index.
             </summary>
-            <param name="index">The mIndex of the item</param>
+            <param name="index">The index of the item</param>
             <returns>The item</returns>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.SerializationInfo">
             <summary>
-            The mCurrent <see cref="T:System.Runtime.Serialization.SerializationInfo"/>
+            The current <see cref="T:System.Runtime.Serialization.SerializationInfo"/>
             </summary>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObservableList`1.StreamingContext">
             <summary>
-            The mCurrent <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
+            The current <see cref="T:System.Runtime.Serialization.StreamingContext"/>.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Add(`0)">
             <summary>
-            Adds an item to the mList.
+            Adds the given item to the list.
             </summary>
             <param name="item">The item</param>
         </member>
@@ -1291,22 +1320,22 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Clear">
             <summary>
-            Removes all items from the mList.
+            Clears the list of all items.
             </summary>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Contains(`0)">
             <summary>
-            Determines whether the mList contains a specific item.
+            Checks if the list contains the given item.
             </summary>
             <param name="item">An item of type <typeparamref name="T"/></param>
-            <returns>Boolean, true if the item exists in the mList</returns>
+            <returns>Boolean, true if the item is present in the list</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.CopyTo(`0[],System.Int32)">
             <summary>
-            Copies the items of the mList to the given array, starting at the given mIndex
+            Copies the items in this list to the given array, starting at the given index.
             </summary>
             <param name="array">The array to copy the items to</param>
-            <param name="arrayIndex">The mIndex at which to start</param>
+            <param name="arrayIndex">The index at which to start</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.GetEnumerator">
             <summary>
@@ -1316,37 +1345,37 @@
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.IndexOf(`0)">
             <summary>
-            Returns the mIndex of the item in the mList.
+            Returns the index in this list of the first instance of the given item.
             </summary>
             <param name="item">The item</param>
-            <returns>The mIndex</returns>
+            <returns>The zero-based index of the first occurrence of this item if found, otherwise -1</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Insert(System.Int32,`0)">
             <summary>
-            Inserts the item at the given mIndex.
+            Inserts the given item at the given index in the list.
             </summary>
-            <param name="index">The mIndex</param>
+            <param name="index">The index</param>
             <param name="item">The item</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Remove(`0)">
             <summary>
-            Removes the item from the mList.
+            Removes the given item from the list.
             </summary>
             <param name="item">The item</param>
             <returns>Boolean, true if the operation was successful</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.RemoveAt(System.Int32)">
             <summary>
-            Removes the item at the given mIndex from the mList.
+            Removes the item at the given index from the list.
             </summary>
-            <param name="index">The <paramref name="index"/>of the item</param>
+            <param name="index">The index of the item</param>
             <returns>Boolean, true if the operation was successful</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObservableList`1.Replace(`0,`0)">
             <summary>
-            Replace the old item with a new item.
+            Replaces the given item with a new item.
             </summary>
-            <param name="oldItem">The old item</param>
+            <param name="oldItem">The item to replace</param>
             <param name="newItem">The new item</param>
             <returns>Boolean, true if the operation was successful</returns>
         </member>
@@ -1361,50 +1390,109 @@
             Invokes the <see cref="E:BlueHeron.Collections.Generic.ObservableList`1.CollectionChanged"/> event.
             </summary>
         </member>
+        <member name="T:BlueHeron.Collections.Generic.PrioritizedQueue`2">
+            <summary>
+            A queue that pops items, based on their priority.
+            </summary>
+            <typeparam name="TKey">The type of the key by which to sort items.</typeparam>
+            <typeparam name="TValue">The type of the objects in the stack</typeparam>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.PrioritizedQueue`2.Count">
+            <summary>
+            Returns the number of <see cref="T:System.Collections.Generic.Queue`1"/>s in this collection.
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.PrioritizedQueue`2.HasElements">
+            <summary>
+            Determines whether there are one or more elements in the queue.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.PrioritizedQueue`2.Add(`0,`1)">
+            <summary>
+            Adds an element of type <typeparamref name="TValue"/> to the queue.
+            </summary>
+            <param name="priority">The priority of the element</param>
+            <param name="value">The element</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.PrioritizedQueue`2.Get">
+            <summary>
+            Pops the next element of type <typeparamref name="TValue"/> from the queue.
+            </summary>
+            <returns>A <typeparamref name="TValue"/></returns>
+        </member>
+        <member name="T:BlueHeron.Collections.Generic.PrioritizedStack`2">
+            <summary>
+            A stack that pops items, based on their priority.
+            </summary>
+            <typeparam name="TKey">The type of the key by which to sort items.</typeparam>
+            <typeparam name="TValue">The type of the objects in the stack</typeparam>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.PrioritizedStack`2.Count">
+            <summary>
+            Returns the number of <see cref="T:System.Collections.Generic.Stack`1"/>s in this collection.
+            </summary>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.PrioritizedStack`2.HasElements">
+            <summary>
+            Determines whether there are one or more elements in the stack.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.PrioritizedStack`2.Add(`0,`1)">
+            <summary>
+            Adds an element of type <typeparamref name="TValue"/> to the stack.
+            </summary>
+            <param name="priority">The priority of the element</param>
+            <param name="value">The element</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.PrioritizedStack`2.Get">
+            <summary>
+            Pops the next element of type <typeparamref name="TValue"/> from the stack.
+            </summary>
+            <returns>A <typeparamref name="TValue"/></returns>
+        </member>
         <member name="T:BlueHeron.Collections.Extensions">
             <summary>
             Extension functions for collections.
             </summary>
         </member>
-        <member name="M:BlueHeron.Collections.Extensions.GetArrayByType``1(System.Collections.Generic.IList{``0})">
+        <member name="M:BlueHeron.Collections.Extensions.AsTypedArray``1(System.Collections.Generic.IList{``0})">
             <summary>
-            Returns the list as a typed array, optimized for <see cref="T:BlueHeron.Collections.Generic.FastList`1"/> and array possibility.
+            Returns the <see cref="T:System.Collections.Generic.IList`1"/> as a typed array, optimized for the possibility that the <see cref="T:System.Collections.Generic.IList`1"/> may be a <see cref="T:BlueHeron.Collections.Generic.FastList`1"/> or a <typeparamref name="T"/>[].
             </summary>
             <typeparam name="T">The type of the elements in the list</typeparam>
             <param name="list">An <see cref="T:System.Collections.Generic.IList`1"/></param>
             <returns>A array of elements of type T</returns>
-        </member>
-        <member name="M:BlueHeron.Collections.Extensions.Get``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
-            <summary>
-            Tries to get a value from a <see cref="T:System.Collections.Generic.IDictionary`2"/>.
-            </summary>
-            <typeparam name="K">The type of the key</typeparam>
-            <typeparam name="V">The type of the value</typeparam>
-            <param name="dict">The respective dictionary</param>
-            <param name="key">The respective key</param>
-            <returns>The value if it exists, else <c>null</c>.</returns>
         </member>
         <member name="T:BlueHeron.Collections.StringTokenizer">
             <summary>
             Tokenizes a string into a collection of values.
             </summary>
         </member>
+        <member name="M:BlueHeron.Collections.StringTokenizer.mRegexWords">
+            <remarks>
+            Pattern explanation:<br/>
+            <code>
+            ○ 1st capture group.<br/>
+                ○ Match any character other than a word character atomically at least once.<br/>
+            </code>
+            </remarks>
+        </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.#ctor(System.String,System.IFormatProvider)">
             <summary> 
             Creates a StringTokenizer with the given <see cref="T:System.IFormatProvider"/>.
             If the IFormatProvider is null, use the thread's IFormatProvider info. 
-            ',' is used as the mList separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
+            ',' is used as the list separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
             </summary> 
             <param name="str">The string to tokenize</param>
             <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> which controls this tokenization</param> 
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.#ctor(System.String,System.Char,System.Char)">
             <summary>
-            Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the mList separator.
+            Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the list separator.
             </summary> 
             <param name="str">The string to tokenize</param>
             <param name="quoteChar">The quote character</param> 
-            <param name="separator">The mList separator</param> 
+            <param name="separator">The list separator</param> 
         </member>
         <member name="P:BlueHeron.Collections.StringTokenizer.IsSeparatorFound">
             <summary>
@@ -1419,7 +1507,7 @@
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.GetNumericListSeparator(System.IFormatProvider)">
             <summary>
-            Get the numeric mList separator for a given IFormatProvider.
+            Get the numeric list separator for a given IFormatProvider.
             Separator is a comma [,] if the decimal separator is not a comma, else a semicolon [;] is used.
             </summary>
             <param name="provider">The <see cref="T:System.IFormatProvider"/> to use</param>
@@ -1459,20 +1547,71 @@
             <param name="separator">The separator character</param>
             <returns>True if next token was found, false if at end of string</returns> 
         </member>
+        <member name="M:BlueHeron.Collections.StringTokenizer.Split(System.String)">
+            <summary>
+            Simply tokenizes a string into words (where word is the regex definition of a word).
+            </summary>
+            <param name="input">The string to tokenize</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.Initialize(System.String,System.Char,System.Char)">
             <summary>
-            Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the mList separator.
+            Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the list separator.
             </summary> 
             <param name="str">The string to tokenize</param>
             <param name="quoteChar">The quote char</param> 
-            <param name="separator">The mList separator</param> 
+            <param name="separator">The list separator</param> 
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.ScanToNextToken(System.Char)">
             <summary>
-            Helper to move the mCharIndex to the next token or to the end of the string.
+            Helper to move the char index to the next token or to the end of the string.
             </summary>
             <param name="separator">The separator character</param>
-            <exception cref="T:System.InvalidOperationException">Emty token or extra data encountered</exception>
+            <exception cref="T:System.InvalidOperationException">Empty token or extra data encountered</exception>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.mRegexWords_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the mRegexWords method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.mRegexWords_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.mRegexWords_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.mRegexWords_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.mRegexWords_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.mRegexWords_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.mRegexWords_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.mRegexWords_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.mRegexWords_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
+            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Utilities.IsWordChar(System.Char)">
+            <summary>Determines whether the character is part of the [\w] set.</summary>
         </member>
     </members>
 </doc>
