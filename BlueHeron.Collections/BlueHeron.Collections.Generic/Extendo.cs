@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Reflection;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BlueHeron.Collections.Generic;
 
@@ -16,7 +16,6 @@ namespace BlueHeron.Collections.Generic;
 ///		Dynamic: dynamic cast allows access to dictionary and native properties/methods
 ///		Dictionary: Any of the extended properties are accessible through the <see cref="IDictionary{TKey, TValue}"/> interface
 /// </summary>
-[JsonObject(MemberSerialization.OptIn)]
 public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 {
 	#region Objects and variables
@@ -65,6 +64,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// <summary>
 	/// Returns an array of <see cref="PropertyInfo"/> objects.
 	/// </summary>
+	[JsonIgnore]
 	public PropertyInfo[] InstancePropertyInfo
 	{
 		get
@@ -80,6 +80,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// <summary>
 	/// Returns a dictionary of properties.
 	/// </summary>
+	[JsonIgnore]
 	public Dictionary<string, object> Properties { get; } = new();
 
 	/// <summary>
@@ -97,6 +98,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// </remarks>
 	/// <param name="key">The name of the property</param> 
 	/// <returns>An object</returns>
+	[JsonIgnore]
 	public object this[string key]
 	{
 		get
