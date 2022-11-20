@@ -33,8 +33,8 @@ namespace BlueHeron.Collections
 		/// <summary>
 		/// The <see cref="Regex"/> to use to split text into words.
 		/// </summary>
-		[GeneratedRegex("(\\W+)")]
-		private static partial Regex mRegexWords();
+		[GeneratedRegex("(\\W+)", RegexOptions.Compiled | RegexOptions.IgnoreCase)]
+		private static partial Regex RegexTokenizeWords();
 
 		#endregion
 
@@ -237,7 +237,7 @@ namespace BlueHeron.Collections
 		/// <returns>An <see cref="IEnumerable{String}"/></returns>
 		public static IEnumerable<string> Split(string input)
 		{
-			return mRegexWords().Split(input).AsEnumerable();
+			return RegexTokenizeWords().Split(input).AsEnumerable();
 		}
 
 		#endregion
