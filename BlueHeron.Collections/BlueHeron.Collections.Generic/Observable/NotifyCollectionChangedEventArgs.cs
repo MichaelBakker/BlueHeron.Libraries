@@ -30,7 +30,7 @@ namespace BlueHeron.Collections.Generic
 		/// <param name="action">The <see cref="NotifyCollectionChangedAction"/> that was performed</param>
 		/// <param name="newItem">The new item</param>
 		/// <param name="oldItem">The old item</param>
-		private NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T newItem = default!, T oldItem = default!)
+		public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T newItem = default!, T oldItem = default!)
 		{
 			Action = action;
 			NewItem = newItem;
