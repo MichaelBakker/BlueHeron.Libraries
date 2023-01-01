@@ -1463,6 +1463,14 @@
             <param name="list">An <see cref="T:System.Collections.Generic.IList`1"/></param>
             <returns>A array of elements of type T</returns>
         </member>
+        <member name="M:BlueHeron.Collections.Extensions.Sort``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Comparison{``0})">
+            <summary>
+            Sorts this <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> without breaking any bindings.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of the element in the collection</typeparam>
+            <param name="collection">The <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> to sort</param>
+            <param name="comparison">The <see cref="T:System.Comparison`1"/> to use when sorting the items in the collection</param>
+        </member>
         <member name="T:BlueHeron.Collections.StringTokenizer">
             <summary>
             Tokenizes a string into a collection of values.
