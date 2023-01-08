@@ -1463,13 +1463,14 @@
             <param name="list">An <see cref="T:System.Collections.Generic.IList`1"/></param>
             <returns>A array of elements of type T</returns>
         </member>
-        <member name="M:BlueHeron.Collections.Extensions.Sort``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Comparison{``0})">
+        <member name="M:BlueHeron.Collections.Extensions.Sort``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Comparison{``0},System.Boolean)">
             <summary>
             Sorts this <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> without breaking any bindings.
             </summary>
             <typeparam name="T">The <see cref="T:System.Type"/> of the element in the collection</typeparam>
             <param name="collection">The <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> to sort</param>
             <param name="comparison">The <see cref="T:System.Comparison`1"/> to use when sorting the items in the collection</param>
+            <param name="reBind">Optionally rebind items in the collection where reordering does not update the UI (e.g. TreeViewItem.ItemsSource does not respond to <see cref="M:System.Collections.ObjectModel.ObservableCollection`1.Move(System.Int32,System.Int32)"/> actions)</param>
         </member>
         <member name="T:BlueHeron.Collections.StringTokenizer">
             <summary>

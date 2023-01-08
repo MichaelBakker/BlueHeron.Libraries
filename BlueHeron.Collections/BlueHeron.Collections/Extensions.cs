@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BlueHeron.Collections.Generic;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BlueHeron.Collections.Generic;
 
 namespace BlueHeron.Collections
 {
@@ -45,14 +45,21 @@ namespace BlueHeron.Collections
 		/// <typeparam name="T">The <see cref="Type"/> of the element in the collection</typeparam>
 		/// <param name="collection">The <see cref="ObservableCollection{T}"/> to sort</param>
 		/// <param name="comparison">The <see cref="Comparison{T}"/> to use when sorting the items in the collection</param>
-		public static void Sort<T>(this ObservableCollection<T> collection, Comparison<T> comparison)
+		/// <param name="reBind">Optionally rebind items in the collection where reordering does not update the UI (e.g. TreeViewItem.ItemsSource does not respond to <see cref="ObservableCollection{T}.Move(int, int)"/> actions)</param>
+		public static void Sort<T>(this ObservableCollection<T> collection, Comparison<T> comparison, bool reBind = false)
 		{
 			var sortableList = new List<T>(collection);
+			Action<int> action = reBind ? (int i) => collection.Add(sortableList[i]) : (int i) => collection.Move(collection.IndexOf(sortableList[i]), i);
+
 			sortableList.Sort(comparison);
 
+			if (reBind)
+			{
+				collection.Clear();
+			}
 			for (int i = 0; i < sortableList.Count; i++)
 			{
-				collection.Move(collection.IndexOf(sortableList[i]), i);
+				action(i);
 			}
 		}
 
