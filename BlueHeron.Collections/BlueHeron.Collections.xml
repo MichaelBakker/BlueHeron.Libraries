@@ -981,6 +981,23 @@
             </summary>
             <param name="item">The object to store</param>
         </member>
+        <member name="T:BlueHeron.Collections.Generic.GroupInfoCollection`1">
+            <summary>
+            An <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> with a key property, useful in grouping operations.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of the elements in the collection</typeparam>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.GroupInfoCollection`1.Key">
+            <summary>
+            The key of this collection.
+            </summary>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.GroupInfoCollection`1.GetEnumerator">
+            <summary>
+            Returns the <see cref="T:System.Collections.Generic.IEnumerator`1"/> for this collection.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerator`1"/></returns>
+        </member>
         <member name="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventHandler`1">
             <summary>
             Event handler for change notifications.
@@ -1449,6 +1466,17 @@
             Pops the next element of type <typeparamref name="TValue"/> from the stack.
             </summary>
             <returns>A <typeparamref name="TValue"/></returns>
+        </member>
+        <member name="T:BlueHeron.Collections.Generic.Singleton`1">
+            <summary>
+            A simple container for singleton objects.
+            </summary>
+            <typeparam name="T">Yhe <see cref="T:System.Type"/> of the object</typeparam>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.Singleton`1.Instance">
+            <summary>
+            Returns the instance of the given type.
+            </summary>
         </member>
         <member name="T:BlueHeron.Collections.Extensions">
             <summary>
