@@ -6,7 +6,7 @@ namespace BlueHeron.Collections.Generic;
 /// </summary>
 /// <typeparam name="P">The type of the key</typeparam>
 /// <typeparam name="V">The type of the value</typeparam>
-public interface IPrioritizedCollection<P, V>
+public interface IPrioritizedCollection<P, V> where P : notnull where V : notnull
 {
     /// <summary>
     /// Returns the number of elements in the collection.

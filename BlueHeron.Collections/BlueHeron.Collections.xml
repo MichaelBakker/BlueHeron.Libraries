@@ -99,11 +99,23 @@
             <typeparam name="K1">The type of the first key</typeparam>
             <typeparam name="K2">The type of the second key</typeparam>
             <typeparam name="TValue">The type of the value</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:BlueHeron.Collections.Generic.DoubleKeyPairValue`3"/> class.
+            </remarks>
+            <param name="key1">The first key</param>
+            <param name="key2">The second key</param>
+            <param name="value">The value</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.DoubleKeyPairValue`3.#ctor(`0,`1,`2)">
             <summary>
-            Initializes a new instance of the <see cref="T:BlueHeron.Collections.Generic.DoubleKeyPairValue`3"/> class.
+            A key-value pair that is represented by two keys and a value.
             </summary>
+            <typeparam name="K1">The type of the first key</typeparam>
+            <typeparam name="K2">The type of the second key</typeparam>
+            <typeparam name="TValue">The type of the value</typeparam>
+            <remarks>
+            Initializes a new instance of the <see cref="T:BlueHeron.Collections.Generic.DoubleKeyPairValue`3"/> class.
+            </remarks>
             <param name="key1">The first key</param>
             <param name="key2">The second key</param>
             <param name="value">The value</param>
@@ -130,7 +142,6 @@
             <summary>
             Returns a <see cref="T:System.String"/> that represents this instance.
             </summary>
-            <returns>A <see cref="T:System.String"/> that represents this instance</returns>
         </member>
         <member name="T:BlueHeron.Collections.Generic.Extendo">
             <summary>
@@ -158,15 +169,6 @@
             This constructor just works off the internal dictionary and any public properties of this object.
             </summary>
         </member>
-        <member name="M:BlueHeron.Collections.Generic.Extendo.#ctor(System.Object)">
-            <summary>
-            Constructor that allows passing in an existing object instance to 'extend'.        
-            </summary>
-            <remarks>
-            You can pass in null here if you don't want to check native properties and only check the Dictionary.
-            </remarks>
-            <param name="instance">Instance of the object to extend</param>
-        </member>
         <member name="P:BlueHeron.Collections.Generic.Extendo.InstancePropertyInfo">
             <summary>
             Returns an array of <see cref="T:System.Reflection.PropertyInfo"/> objects.
@@ -179,7 +181,7 @@
         </member>
         <member name="P:BlueHeron.Collections.Generic.Extendo.Item(System.String)">
             <summary>
-            Convenience method that provides a string Indexer to the Properties collection AND the strongly typed properties of the passed in object, by name.
+            Convenience method that provides a string indexer to the Properties collection AND the strongly typed properties of the passed in object, by name.
             <code>
             // dynamic
             exp["Address"] = "112 nowhere lane"; 
@@ -200,14 +202,20 @@
             </summary>
             <param name="propertyName">The name of the property</param>
             <param name="includeInstanceProperties">If true, include fields of the Extendo based object itself in the search</param>
-            <returns>Boolean, true if a property exists with the given name</returns>
+            <returns>A <see cref="T:System.Boolean"/>, <see langword="true"/> if a property exists with the given name</returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.Extendo.Create``1(``0)">
+            <summary>
+            Returns a new <see cref="T:BlueHeron.Collections.Generic.Extendo"/> passing in an existing object instance to 'extend'.        
+            </summary>
+            <param name="instance">Instance of the object to extend</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)">
             <summary>
             Tries to retrieve a member by name first from instance properties followed by the collection entries.
             </summary>
             <param name="binder">The <see cref="T:System.Dynamic.GetMemberBinder"/></param>
-            <param name="result">The member, if found</param>
+            <param name="result">The member, if found; else <see langword="null"/></param>
             <returns>Boolean, true if the operation was successful</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)">
@@ -243,12 +251,6 @@
             <param name="result">The value</param>
             <returns>Boolean, true if the operation was successful</returns>
         </member>
-        <member name="M:BlueHeron.Collections.Generic.Extendo.Initialize(System.Object)">
-            <summary>
-            Initializes this object, based on the given instance.
-            </summary>
-            <param name="instance">An instance of an object</param>
-        </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.InvokeMethod(System.Object,System.String,System.Object[],System.Object@)">
             <summary>
             Reflection helper method to invoke a method.
@@ -267,6 +269,11 @@
             <param name="name">The name of the property</param>
             <param name="value">The value to set</param>
             <returns>Boolean, true if the operation was successful</returns>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.Extendo.GetInstanceProperties(System.Type)">
+            <summary>
+            Returns an array of <see cref="T:System.Reflection.PropertyInfo"/> objects.
+            </summary>
         </member>
         <member name="T:BlueHeron.Collections.Generic.FastList`1">
             <summary>
@@ -955,19 +962,29 @@
             Object that is able to create and store a pool of objects.
             </summary>
             <typeparam name="T">The type of the objects in the pool</typeparam>
+            <remarks>
+            Creates a new ObjectPool.
+            </remarks>
+            <param name="objectGenerator">The <see cref="T:System.Func`1"/> that creates the object of type <typeparamref name="T"/></param>
+            <param name="maxCapacity">The capacity of the pool</param>
+            <exception cref="T:System.ArgumentNullException">Parameter objectGenerator cannot be null</exception>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.ObjectPool`1.#ctor(System.Func{`0},System.Int32)">
+            <summary>
+            Object that is able to create and store a pool of objects.
+            </summary>
+            <typeparam name="T">The type of the objects in the pool</typeparam>
+            <remarks>
+            Creates a new ObjectPool.
+            </remarks>
+            <param name="objectGenerator">The <see cref="T:System.Func`1"/> that creates the object of type <typeparamref name="T"/></param>
+            <param name="maxCapacity">The capacity of the pool</param>
+            <exception cref="T:System.ArgumentNullException">Parameter objectGenerator cannot be null</exception>
         </member>
         <member name="P:BlueHeron.Collections.Generic.ObjectPool`1.Count">
             <summary>
             Returns the number of objects in the pool.
             </summary>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.ObjectPool`1.#ctor(System.Func{`0},System.Int32)">
-            <summary>
-            Creates a new ObjectPool.
-            </summary>
-            <param name="objectGenerator">The <see cref="T:System.Func`1"/> that creates the object of type <typeparamref name="T"/></param>
-            <param name="maxCapacity">The capacity of the pool</param>
-            <exception cref="T:System.ArgumentNullException">Parameter objectGenerator cannot be null</exception>
         </member>
         <member name="M:BlueHeron.Collections.Generic.ObjectPool`1.Get">
             <summary>
@@ -981,22 +998,22 @@
             </summary>
             <param name="item">The object to store</param>
         </member>
-        <member name="T:BlueHeron.Collections.Generic.GroupInfoCollection`1">
+        <member name="T:BlueHeron.Collections.Generic.GroupInfoCollection`2">
             <summary>
             An <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> with a key property, useful in grouping operations.
             </summary>
             <typeparam name="T">The <see cref="T:System.Type"/> of the elements in the collection</typeparam>
         </member>
-        <member name="P:BlueHeron.Collections.Generic.GroupInfoCollection`1.Key">
+        <member name="M:BlueHeron.Collections.Generic.GroupInfoCollection`2.#ctor(`0)">
+            <summary>
+            An <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> with a key property, useful in grouping operations.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type"/> of the elements in the collection</typeparam>
+        </member>
+        <member name="P:BlueHeron.Collections.Generic.GroupInfoCollection`2.Key">
             <summary>
             The key of this collection.
             </summary>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.GroupInfoCollection`1.GetEnumerator">
-            <summary>
-            Returns the <see cref="T:System.Collections.Generic.IEnumerator`1"/> for this collection.
-            </summary>
-            <returns>An <see cref="T:System.Collections.Generic.IEnumerator`1"/></returns>
         </member>
         <member name="T:BlueHeron.Collections.Generic.NotifyCollectionChangedEventHandler`1">
             <summary>
@@ -1027,6 +1044,24 @@
             Event arguments for the <see cref="T:BlueHeron.Collections.Generic.ObservableDictionary`2"/>
             </summary>
             <typeparam name="T">The type of the object in the collection</typeparam>
+            <remarks>
+            Creates a new <see cref="T:System.Collections.Specialized.NotifyCollectionChangedEventArgs"/>.
+            </remarks>
+            <param name="action">The <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> that was performed</param>
+            <param name="newItem">The new item</param>
+            <param name="oldItem">The old item</param>
+        </member>
+        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.#ctor(System.Collections.Specialized.NotifyCollectionChangedAction,`0,`0)">
+            <summary>
+            Event arguments for the <see cref="T:BlueHeron.Collections.Generic.ObservableDictionary`2"/>
+            </summary>
+            <typeparam name="T">The type of the object in the collection</typeparam>
+            <remarks>
+            Creates a new <see cref="T:System.Collections.Specialized.NotifyCollectionChangedEventArgs"/>.
+            </remarks>
+            <param name="action">The <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> that was performed</param>
+            <param name="newItem">The new item</param>
+            <param name="oldItem">The old item</param>
         </member>
         <member name="F:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.Action">
             <summary>
@@ -1042,14 +1077,6 @@
             <summary>
             The old item.
             </summary>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.#ctor(System.Collections.Specialized.NotifyCollectionChangedAction,`0,`0)">
-            <summary>
-            Creates a new NotifyCollectionChangedEventArgs.
-            </summary>
-            <param name="action">The <see cref="T:System.Collections.Specialized.NotifyCollectionChangedAction"/> that was performed</param>
-            <param name="newItem">The new item</param>
-            <param name="oldItem">The old item</param>
         </member>
         <member name="M:BlueHeron.Collections.Generic.NotifyCollectionChangedEventArgs`1.ToStandardEventArgs">
             <summary>
@@ -1507,7 +1534,11 @@
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.RegexTokenizeWords">
             <remarks>
-            Pattern explanation:<br/>
+            Pattern:<br/>
+            <code>(\\W+)</code><br/>
+            Options:<br/>
+            <code>RegexOptions.IgnoreCase | RegexOptions.Compiled</code><br/>
+            Explanation:<br/>
             <code>
             ○ 1st capture group.<br/>
                 ○ Match any character other than a word character atomically at least once.<br/>
@@ -1517,7 +1548,7 @@
         <member name="M:BlueHeron.Collections.StringTokenizer.#ctor(System.String,System.IFormatProvider)">
             <summary> 
             Creates a StringTokenizer with the given <see cref="T:System.IFormatProvider"/>.
-            If the IFormatProvider is null, use the thread's IFormatProvider info. 
+            If the IFormatProvider is null, the thread's <see cref="T:System.IFormatProvider"/> is used. 
             ',' is used as the list separator, unless it's the same as the decimal separator. If it *is*, then e.g. "23,5" can't be determined to be one number or two. In this case, use ";" as the separator.
             </summary> 
             <param name="str">The string to tokenize</param>
@@ -1525,7 +1556,7 @@
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.#ctor(System.String,System.Char,System.Char)">
             <summary>
-            Initializes the StringTokenizer with the string to tokenize, the character which represents quotes and the list separator.
+            Initializes the StringTokenizer with the string to tokenize, the character that represents quotes and the list separator.
             </summary> 
             <param name="str">The string to tokenize</param>
             <param name="quoteChar">The quote character</param> 
@@ -1544,7 +1575,7 @@
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.GetNumericListSeparator(System.IFormatProvider)">
             <summary>
-            Get the numeric list separator for a given IFormatProvider.
+            Get the numeric list separator for a given <see cref="T:System.IFormatProvider"/>.
             Separator is a comma [,] if the decimal separator is not a comma, else a semicolon [;] is used.
             </summary>
             <param name="provider">The <see cref="T:System.IFormatProvider"/> to use</param>
@@ -1593,7 +1624,7 @@
         </member>
         <member name="M:BlueHeron.Collections.StringTokenizer.Initialize(System.String,System.Char,System.Char)">
             <summary>
-            Initialize the StringTokenizer with the string to tokenize, the char which represents quotes and the list separator.
+            Initialize the StringTokenizer with the string to tokenize, the character that represents quotes and the list separator.
             </summary> 
             <param name="str">The string to tokenize</param>
             <param name="quoteChar">The quote char</param> 
@@ -1647,8 +1678,14 @@
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
             <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
         </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Utilities.IndexOfAnyExceptWordChar(System.ReadOnlySpan{System.Char})">
+            <summary>Finds the next index of any character that matches any character other than a word character.</summary>
+        </member>
         <member name="M:System.Text.RegularExpressions.Generated.Utilities.IsWordChar(System.Char)">
             <summary>Determines whether the character is part of the [\w] set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiWordChars">
+            <summary>Supports searching for characters in or not in "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".</summary>
         </member>
     </members>
 </doc>

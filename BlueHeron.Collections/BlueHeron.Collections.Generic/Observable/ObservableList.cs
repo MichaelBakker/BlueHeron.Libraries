@@ -15,12 +15,10 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 
 	private readonly FastList<T> mList;
 
-#nullable enable
 	/// <summary>
 	/// Event is fired when the collection or one or more items in the collection changed.
 	/// </summary>
 	public event NotifyCollectionChangedEventHandler<T>? CollectionChanged;
-#nullable disable
 
 	#endregion
 
@@ -31,16 +29,17 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	/// </summary>
 	public ObservableList()
 	{
-		mList = new FastList<T>();
+        SerializationInfo = null!;
+        mList = [];
 	}
 
 	/// <summary>
 	/// Creates a new list, populated with the given collection of <typeparamref name="T"/>s.
 	/// </summary>
 	/// <param name="collection">A collection of <typeparamref name="T"/>s</param>
-	public ObservableList(IEnumerable<T> collection)
+	public ObservableList(IEnumerable<T> collection) : this()
 	{
-		mList = new FastList<T>(collection);
+		mList = [.. collection];
 	}
 
 	/// <summary>
@@ -48,7 +47,7 @@ public class ObservableList<T> : IList<T>, IObservableCollection<T>
 	/// </summary>
 	/// <param name="serializationInfo">The <see cref="System.Runtime.Serialization.SerializationInfo"/></param>
 	/// <param name="streamingContext">The <see cref="System.Runtime.Serialization.StreamingContext"/></param>
-	public ObservableList(SerializationInfo serializationInfo, StreamingContext streamingContext)
+	public ObservableList(SerializationInfo serializationInfo, StreamingContext streamingContext) : this()
 	{
 		SerializationInfo = serializationInfo;
 		StreamingContext = streamingContext;

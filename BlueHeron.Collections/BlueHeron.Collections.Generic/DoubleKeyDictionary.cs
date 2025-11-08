@@ -10,7 +10,7 @@ namespace BlueHeron.Collections.Generic;
 /// <typeparam name="K1">The type of the first key</typeparam>
 /// <typeparam name="K2">The type of the second key</typeparam>
 /// <typeparam name="TValue">The value type</typeparam>
-public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValue<K1, K2, TValue>>, IEquatable<DoubleKeyDictionary<K1, K2, TValue>>
+public sealed class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValue<K1, K2, TValue>>, IEquatable<DoubleKeyDictionary<K1, K2, TValue>> where K1 : notnull where K2 : notnull
 {
 	#region Properties
 
@@ -27,7 +27,7 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 	/// <summary>
 	/// Gets the outer dictionary.
 	/// </summary>
-	private Dictionary<K1, Dictionary<K2, TValue>> OuterDictionary { get; } = new Dictionary<K1, Dictionary<K2, TValue>>();
+	private Dictionary<K1, Dictionary<K2, TValue>> OuterDictionary { get; } = [];
 
 	#endregion
 
@@ -43,16 +43,12 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 	{
 		if (OuterDictionary.TryGetValue(key1, out var inner))
 		{
-			if (inner.ContainsKey(key2))
+			if (!inner.TryAdd(key2, value))
 			{
 				inner[key2] = value;
 			}
-			else
-			{
-				inner.Add(key2, value);
-			}
-		}
-		else
+        }
+        else
 		{
 			inner = new Dictionary<K2, TValue> {{ key2, value }};
 			OuterDictionary.Add(key1, inner);
@@ -79,16 +75,14 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 	/// <returns>Returns <c>true</c> if the specified keys are both present; otherwise, <c>false</c></returns>
 	public bool ContainsKey(K1 index1, K2 index2)
 	{
-		if (!OuterDictionary.ContainsKey(index1))
+		if (!OuterDictionary.TryGetValue(index1, out var value))
 		{
 			return false;
 		}
-
-		if (!OuterDictionary[index1].ContainsKey(index2))
+		if (!value.ContainsKey(index2))
 		{
 			return false;
 		}
-
 		return true;
 	}
 
@@ -97,9 +91,9 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 	/// </summary>
 	/// <param name="other">The other <see cref="DoubleKeyDictionary{K1, K2, TValue}"/></param>
 	/// <returns>True, if both dictionaries are equal</returns>
-	public bool Equals(DoubleKeyDictionary<K1, K2, TValue> other)
+	public bool Equals(DoubleKeyDictionary<K1, K2, TValue>? other)
 	{
-		if (OuterDictionary.Keys.Count != other.OuterDictionary.Keys.Count)
+		if (other == null || OuterDictionary.Keys.Count != other.OuterDictionary.Keys.Count)
 		{
 			return false;
 		}
@@ -112,7 +106,6 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 			{
 				isEqual = false;
 			}
-
 			if (!isEqual)
 			{
 				break;
@@ -126,19 +119,16 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 				{
 					isEqual = false;
 				}
-
 				if (!otherInnerDictionary.ContainsKey(innerValue.Key))
 				{
 					isEqual = false;
 				}
 			}
-
 			if (!isEqual)
 			{
 				break;
 			}
 		}
-
 		return isEqual;
 	}
 
@@ -147,7 +137,7 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 	/// </summary>
 	/// <param name="obj">The object to compare to</param>
 	/// <returns>True, if both dictionaries are equal</returns>
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj is null)
 		{
@@ -206,7 +196,7 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 	/// <param name="key2">The second key</param>
 	/// <param name="obj">The value of type <typeparamref name="TValue"/>, if present, else null</param>
 	/// <returns></returns>
-	public bool TryGetValue(K1 key1, K2 key2, out TValue obj)
+	public bool TryGetValue(K1 key1, K2 key2, out TValue? obj)
 	{
 		if (OuterDictionary.TryGetValue(key1, out var inner) && inner.TryGetValue(key2, out obj))
 		{
@@ -214,7 +204,7 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 		}
 		else
 		{
-			obj = default;
+			obj = default!;
 			return false;
 		}
 	}
@@ -248,60 +238,48 @@ public class DoubleKeyDictionary<K1, K2, TValue> : IEnumerable<DoubleKeyPairValu
 /// <typeparam name="K1">The type of the first key</typeparam>
 /// <typeparam name="K2">The type of the second key</typeparam>
 /// <typeparam name="TValue">The type of the value</typeparam>
-public sealed class DoubleKeyPairValue<K1, K2, TValue>
+/// <remarks>
+/// Initializes a new instance of the <see cref="DoubleKeyPairValue{K1,K2,TValue}"/> class.
+/// </remarks>
+/// <param name="key1">The first key</param>
+/// <param name="key2">The second key</param>
+/// <param name="value">The value</param>
+public sealed class DoubleKeyPairValue<K1, K2, TValue>(K1 key1, K2 key2, TValue value)
 {
 	#region Objects and variables
 
 	private const string fmtToString = "{0} - {1} | {2}";
 
-	#endregion
+    #endregion
 
-	#region Construction
+    #region Properties
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="DoubleKeyPairValue{K1,K2,TValue}"/> class.
-	/// </summary>
-	/// <param name="key1">The first key</param>
-	/// <param name="key2">The second key</param>
-	/// <param name="value">The value</param>
-	public DoubleKeyPairValue(K1 key1, K2 key2, TValue value)
-	{
-		Key1 = key1;
-		Key2 = key2;
-		Value = value;
-	}
+    /// <summary>
+    /// Gets or sets the first key.
+    /// </summary>
+    /// <value>The key</value>
+    public K1 Key1 { get; set; } = key1;
 
-	#endregion
+    /// <summary>
+    /// Gets or sets the second key.
+    /// </summary>
+    /// <value>The key</value>
+    public K2 Key2 { get; set; } = key2;
 
-	#region Properties
+    /// <summary>
+    /// Gets or sets the value.
+    /// </summary>
+    /// <value>The value</value>
+    public TValue Value { get; set; } = value;
 
-	/// <summary>
-	/// Gets or sets the first key.
-	/// </summary>
-	/// <value>The key</value>
-	public K1 Key1 { get; set; }
+    #endregion
 
-	/// <summary>
-	/// Gets or sets the second key.
-	/// </summary>
-	/// <value>The key</value>
-	public K2 Key2 { get; set; }
+    #region Public methods and functions
 
-	/// <summary>
-	/// Gets or sets the value.
-	/// </summary>
-	/// <value>The value</value>
-	public TValue Value { get; set; }
-
-	#endregion
-
-	#region Public methods and functions
-
-	/// <summary>
-	/// Returns a <see cref="string"/> that represents this instance.
-	/// </summary>
-	/// <returns>A <see cref="string"/> that represents this instance</returns>
-	public override string ToString()
+    /// <summary>
+    /// Returns a <see cref="string"/> that represents this instance.
+    /// </summary>
+    public override string ToString()
 	{
 		return string.Format(fmtToString, Key1, Key2, Value);
 	}

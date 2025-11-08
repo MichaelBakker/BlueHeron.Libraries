@@ -11,7 +11,7 @@ public static class Singleton<T> where T : new()
 {
     #region Objects and variables
 
-    private static ConcurrentDictionary<Type, T> _instances = new ConcurrentDictionary<Type, T>();
+    private static readonly ConcurrentDictionary<Type, T> mInstances = new();
 
     #endregion
 
@@ -20,7 +20,7 @@ public static class Singleton<T> where T : new()
     /// <summary>
     /// Returns the instance of the given type.
     /// </summary>
-    public static T Instance => _instances.GetOrAdd(typeof(T), (t) => new T());
+    public static T Instance => mInstances.GetOrAdd(typeof(T), (t) => new T());
 
     #endregion
 }

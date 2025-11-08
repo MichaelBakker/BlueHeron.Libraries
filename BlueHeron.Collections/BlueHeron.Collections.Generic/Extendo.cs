@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -25,12 +26,17 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// </summary>
 	private object mInstance;
 
-	private PropertyInfo[] mInstancePropertyInfo;
-
-	/// <summary>
-	/// Cached type of the instance.
-	/// </summary>
-	private Type mInstanceType;
+    /// <summary>
+    /// Cached type of the instance.
+    /// </summary>
+    [DynamicallyAccessedMembers(
+        DynamicallyAccessedMemberTypes.PublicConstructors |
+        DynamicallyAccessedMemberTypes.PublicMethods |
+        DynamicallyAccessedMemberTypes.PublicFields |
+        DynamicallyAccessedMemberTypes.PublicNestedTypes |
+        DynamicallyAccessedMemberTypes.PublicProperties |
+        DynamicallyAccessedMemberTypes.PublicEvents)] // allow trimming
+    private Type mInstanceType = null!;
 
 	#endregion
 
@@ -40,21 +46,10 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// This constructor just works off the internal dictionary and any public properties of this object.
 	/// </summary>
 	[DebuggerStepThrough()]
-	public Extendo()
-	{
-		Initialize(this);
-	}
-
-	/// <summary>
-	/// Constructor that allows passing in an existing object instance to 'extend'.        
-	/// </summary>
-	/// <remarks>
-	/// You can pass in null here if you don't want to check native properties and only check the Dictionary.
-	/// </remarks>
-	/// <param name="instance">Instance of the object to extend</param>
-	public Extendo(object instance)
-	{
-		Initialize(instance);
+    public Extendo() : base()
+    {
+        mInstance = this;
+        mInstanceType = typeof(Extendo);
 	}
 
 	#endregion
@@ -65,15 +60,15 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// Returns an array of <see cref="PropertyInfo"/> objects.
 	/// </summary>
 	[JsonIgnore]
-	public PropertyInfo[] InstancePropertyInfo
+    public PropertyInfo[]? InstancePropertyInfo
 	{
 		get
 		{
-			if (mInstancePropertyInfo == null && mInstance != null)
+			if (field == null && mInstanceType != null)
 			{
-				mInstancePropertyInfo = mInstance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+				field = GetInstanceProperties(mInstanceType);
 			}
-			return mInstancePropertyInfo;
+			return field;
 		}
 	}
 
@@ -81,10 +76,10 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// Returns a dictionary of properties.
 	/// </summary>
 	[JsonIgnore]
-	public Dictionary<string, object> Properties { get; } = new();
+	public Dictionary<string, object?> Properties { get; } = [];
 
 	/// <summary>
-	/// Convenience method that provides a string Indexer to the Properties collection AND the strongly typed properties of the passed in object, by name.
+	/// Convenience method that provides a string indexer to the Properties collection AND the strongly typed properties of the passed in object, by name.
 	/// <code>
 	/// // dynamic
 	/// exp["Address"] = "112 nowhere lane"; 
@@ -99,7 +94,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// <param name="key">The name of the property</param> 
 	/// <returns>An object</returns>
 	[JsonIgnore]
-	public object this[string key]
+	public object? this[string key]
 	{
 		get
 		{
@@ -109,7 +104,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 			}
 			catch (KeyNotFoundException)
 			{
-				object result; // try reflection on instanceType
+				object? result; // try reflection on instanceType
 				if (GetProperty(mInstance, key, out result))
 				{
 					return result;
@@ -146,16 +141,16 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// </summary>
 	/// <param name="propertyName">The name of the property</param>
 	/// <param name="includeInstanceProperties">If true, include fields of the Extendo based object itself in the search</param>
-	/// <returns>Boolean, true if a property exists with the given name</returns>
+	/// <returns>A <see cref="bool"/>, <see langword="true"/> if a property exists with the given name</returns>
 	public bool Contains(string propertyName, bool includeInstanceProperties = false)
 	{
 		var res = Properties.ContainsKey(propertyName);
+
 		if (res)
 		{
 			return true;
 		}
-
-		if (includeInstanceProperties && mInstance != null)
+		if (includeInstanceProperties && InstancePropertyInfo != null)
 		{
 			foreach (var prop in InstancePropertyInfo)
 			{
@@ -168,17 +163,37 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 		return false;
 	}
 
-	/// <summary>
-	/// Tries to retrieve a member by name first from instance properties followed by the collection entries.
+    /// <summary>
+	/// Returns a new <see cref="Extendo"/> passing in an existing object instance to 'extend'.        
 	/// </summary>
-	/// <param name="binder">The <see cref="GetMemberBinder"/></param>
-	/// <param name="result">The member, if found</param>
-	/// <returns>Boolean, true if the operation was successful</returns>
-	public override bool TryGetMember(GetMemberBinder binder, out object result)
+	/// <param name="instance">Instance of the object to extend</param>
+	public static Extendo Create<[DynamicallyAccessedMembers(
+        DynamicallyAccessedMemberTypes.PublicConstructors |
+        DynamicallyAccessedMemberTypes.PublicMethods |
+        DynamicallyAccessedMemberTypes.PublicFields |
+        DynamicallyAccessedMemberTypes.PublicNestedTypes |
+        DynamicallyAccessedMemberTypes.PublicProperties |
+        DynamicallyAccessedMemberTypes.PublicEvents)] T>(T instance) where T : class, new()
+    {
+        var xt = new Extendo
+        {
+            mInstance = instance,
+            mInstanceType = typeof(T)
+        };
+        return xt;
+    }
+
+    /// <summary>
+    /// Tries to retrieve a member by name first from instance properties followed by the collection entries.
+    /// </summary>
+    /// <param name="binder">The <see cref="GetMemberBinder"/></param>
+    /// <param name="result">The member, if found; else <see langword="null"/></param>
+    /// <returns>Boolean, true if the operation was successful</returns>
+    public override bool TryGetMember(GetMemberBinder binder, out object? result)
 	{
-		if (Properties.ContainsKey(binder.Name)) // first check the Properties collection for member
+		if (Properties.TryGetValue(binder.Name, out var value)) // first check the Properties collection for member
 		{
-			result = Properties[binder.Name];
+			result = value;
 			return true;
 		}
 		if (mInstance != null) // next check for Public properties via Reflection
@@ -200,7 +215,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// <param name="args">Arguments to use when calling the member</param>
 	/// <param name="result">The result of thye call</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
-	public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+	public override bool TryInvokeMember(InvokeMemberBinder binder, object?[]? args, out object? result)
 	{
 		if (mInstance != null)
 		{
@@ -223,7 +238,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// <param name="binder">The <see cref="SetMemberBinder"/></param>
 	/// <param name="value">The value to set</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
-	public override bool TrySetMember(SetMemberBinder binder, object value)
+	public override bool TrySetMember(SetMemberBinder binder, object? value)
 	{
 		if (mInstance != null) // first check to see if there's a native property to set
 		{
@@ -241,27 +256,27 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 		return true;
 	}
 
-	#endregion
+    #endregion
 
-	#region Private methods and functions
+    #region Private methods and functions
 
-	/// <summary>
-	/// Returns all properties.
-	/// </summary>
-	/// <param name="includeInstanceProperties">If true, include fields of the Exptendo based object itself</param>
-	/// <returns>A collection of <see cref="KeyValuePair{String, Object}"/>s</returns>
-	public IEnumerable<KeyValuePair<string, object>> GetProperties(bool includeInstanceProperties = false)
+    /// <summary>
+    /// Returns all properties.
+    /// </summary>
+    /// <param name="includeInstanceProperties">If true, include fields of the Exptendo based object itself</param>
+    /// <returns>A collection of <see cref="KeyValuePair{String, Object}"/>s</returns>
+    public IEnumerable<KeyValuePair<string, object?>> GetProperties(bool includeInstanceProperties = false)
 	{
-		if (includeInstanceProperties && mInstance != null)
+		if (includeInstanceProperties && InstancePropertyInfo != null)
 		{
 			foreach (var prop in InstancePropertyInfo)
 			{
-				yield return new KeyValuePair<string, object>(prop.Name, prop.GetValue(mInstance, null));
+				yield return new KeyValuePair<string, object?>(prop.Name, prop.GetValue(mInstance, null));
 			}
 		}
 		foreach (var key in Properties.Keys)
 		{
-			yield return new KeyValuePair<string, object>(key, Properties[key]);
+			yield return new KeyValuePair<string, object?>(key, Properties[key]);
 		}
 	}
 
@@ -272,7 +287,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// <param name="name">The name of the property</param>
 	/// <param name="result">The value</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
-	protected bool GetProperty(object instance, string name, out object result)
+	protected bool GetProperty(object? instance, string name, out object? result)
 	{
 		instance ??= this;
 
@@ -291,19 +306,6 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	}
 
 	/// <summary>
-	/// Initializes this object, based on the given instance.
-	/// </summary>
-	/// <param name="instance">An instance of an object</param>
-	protected virtual void Initialize(object instance)
-	{
-		mInstance = instance;
-		if (instance != null)
-		{
-			mInstanceType = instance.GetType();
-		}
-	}
-
-	/// <summary>
 	/// Reflection helper method to invoke a method.
 	/// </summary>
 	/// <param name="instance">The instance on which to invoke the method</param>
@@ -311,7 +313,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// <param name="args">The arguments</param>
 	/// <param name="result">The result of invocation</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
-	protected bool InvokeMethod(object instance, string name, object[] args, out object result)
+	protected bool InvokeMethod(object? instance, string name, object?[]? args, out object? result)
 	{
 		instance ??= this;
 
@@ -323,10 +325,13 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 		if (miArray != null && miArray.Length > 0)
 		{
 			var mi = miArray[0] as MethodInfo;
-			result = mi.Invoke(instance, args);
-			return true;
+			
+            if (mi != null)
+            {
+                result = mi.Invoke(instance, args);
+                return true;
+            }
 		}
-
 		result = null;
 		return false;
 	}
@@ -338,7 +343,7 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 	/// <param name="name">The name of the property</param>
 	/// <param name="value">The value to set</param>
 	/// <returns>Boolean, true if the operation was successful</returns>
-	protected bool SetProperty(object instance, string name, object value)
+	protected bool SetProperty(object? instance, string name, object? value)
 	{
 		instance ??= this;
 
@@ -353,6 +358,14 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
 			}
 		}
 		return false;
+	}
+
+	/// <summary>
+	/// Returns an array of <see cref="PropertyInfo"/> objects.
+	/// </summary>
+	private static PropertyInfo[] GetInstanceProperties([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] Type type)
+	{
+		return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
 	}
 
 	#endregion

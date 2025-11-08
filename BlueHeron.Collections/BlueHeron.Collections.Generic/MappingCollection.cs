@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BlueHeron.Collections.Generic;
 
@@ -10,13 +9,13 @@ namespace BlueHeron.Collections.Generic;
 /// <typeparam name="TIndex">The type of the mIndex</typeparam>
 /// <typeparam name="TName">The type of the name</typeparam>
 /// <typeparam name="TValue">The type of the value</typeparam>
-public sealed class MappingCollection<TIndex, TName, TValue>
+public sealed class MappingCollection<TIndex, TName, TValue> where TIndex : notnull where TName : notnull
 {
     #region Objects and variables
 
-    private readonly Dictionary<TIndex, TName> indexNameMapping = new();
-    private readonly Dictionary<TName, TIndex> nameIndexMapping = new();
-    private readonly Dictionary<TIndex, TValue> indexDataMapping = new();
+    private readonly Dictionary<TIndex, TName> indexNameMapping = [];
+    private readonly Dictionary<TName, TIndex> nameIndexMapping = [];
+    private readonly Dictionary<TIndex, TValue> indexDataMapping = [];
 
     private const string errDuplicateIndex = "Cannot add a duplicate index.";
     private const string errDuplicateName = "Cannot add a duplicate name.";
@@ -43,7 +42,7 @@ public sealed class MappingCollection<TIndex, TName, TValue>
     /// <summary>
     /// Returns the index to name mappings as array of <see cref="KeyValuePair{TIndex, TValue}"/>s.
     /// </summary>
-    public KeyValuePair<TIndex, TValue>[] MappingArray { get; private set; } = Array.Empty<KeyValuePair<TIndex, TValue>>();
+    public KeyValuePair<TIndex, TValue>[] MappingArray { get; private set; } = [];
 
     /// <summary>
     /// Returns the value with the given key (i.e. index).
@@ -82,7 +81,7 @@ public sealed class MappingCollection<TIndex, TName, TValue>
         indexNameMapping.Add(index, name);
         nameIndexMapping.Add(name, index);
         indexDataMapping.Add(index, item);
-        MappingArray = indexDataMapping.ToArray();
+        MappingArray = [.. indexDataMapping];
     }
 
     /// <summary>
@@ -93,7 +92,7 @@ public sealed class MappingCollection<TIndex, TName, TValue>
         nameIndexMapping.Clear();
         indexNameMapping.Clear();
         indexDataMapping.Clear();
-        MappingArray = Array.Empty<KeyValuePair<TIndex, TValue>>();
+        MappingArray = [];
     }
 
     /// <summary>
@@ -124,18 +123,15 @@ public sealed class MappingCollection<TIndex, TName, TValue>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1853:Unnecessary call to 'Dictionary.ContainsKey(key)'", Justification = "By design")]
     public bool Remove(TIndex index)
     {
-        if (indexNameMapping.ContainsKey(index))
+        if (indexNameMapping.TryGetValue(index, out var value))
         {
-            nameIndexMapping.Remove(indexNameMapping[index]);
+            nameIndexMapping.Remove(value);
             indexNameMapping.Remove(index);
             indexDataMapping.Remove(index);
-            MappingArray = indexDataMapping.ToArray();
+            MappingArray = [.. indexDataMapping];
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /// <summary>
@@ -146,18 +142,15 @@ public sealed class MappingCollection<TIndex, TName, TValue>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1853:Unnecessary call to 'Dictionary.ContainsKey(key)'", Justification = "By design")]
     public bool Remove(TName name)
     {
-        if (nameIndexMapping.ContainsKey(name))
+        if (nameIndexMapping.TryGetValue(name, out var value))
         {
-            indexNameMapping.Remove(nameIndexMapping[name]);
-            indexDataMapping.Remove(nameIndexMapping[name]);
+            indexNameMapping.Remove(value);
+            indexDataMapping.Remove(value);
             nameIndexMapping.Remove(name);
-            MappingArray = indexDataMapping.ToArray();
+            MappingArray = [.. indexDataMapping];
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /// <summary>
@@ -166,7 +159,7 @@ public sealed class MappingCollection<TIndex, TName, TValue>
     /// <param name="id">The <typeparamref name="TIndex"/></param>
     /// <param name="data">The <typeparamref name="TValue"/> if it exists, else null</param>
     /// <returns>True if the operation was successful</returns>
-    public bool TryGetItem(TIndex id, out TValue data)
+    public bool TryGetItem(TIndex id, out TValue? data)
     {
         return indexDataMapping.TryGetValue(id, out data);
     }
@@ -177,17 +170,14 @@ public sealed class MappingCollection<TIndex, TName, TValue>
     /// <param name="name">The <typeparamref name="TName"/></param>
     /// <param name="data">The <typeparamref name="TValue"/> if it exists, else null</param>
     /// <returns>True if the operation was successful</returns>
-    public bool TryGetItem(TName name, out TValue data)
+    public bool TryGetItem(TName name, out TValue? data)
     {
         if (nameIndexMapping.TryGetValue(name, out var idx) && indexDataMapping.TryGetValue(idx, out data))
         {
             return true;
         }
-        else
-        {
-            data = default;
-            return false;
-        }
+        data = default!;
+        return false;
     }
 
     /// <summary>
@@ -196,7 +186,7 @@ public sealed class MappingCollection<TIndex, TName, TValue>
     /// <param name="key">The <typeparamref name="TIndex"/></param>
     /// <param name="name">The <typeparamref name="TName"/></param>
     /// <returns>True if the operation was successful</returns>
-    public bool TryGetName(TIndex key, out TName name)
+    public bool TryGetName(TIndex key, out TName? name)
     {
         return indexNameMapping.TryGetValue(key, out name);
     }
@@ -207,7 +197,7 @@ public sealed class MappingCollection<TIndex, TName, TValue>
     /// <param name="name">The <typeparamref name="TName"/></param>
     /// <param name="key">The <typeparamref name="TIndex"/></param>
     /// <returns>True if the operation was successful</returns>
-    public bool TryGetSlot(TName name, out TIndex key)
+    public bool TryGetSlot(TName name, out TIndex? key)
     {
         return nameIndexMapping.TryGetValue(name, out key);
     }

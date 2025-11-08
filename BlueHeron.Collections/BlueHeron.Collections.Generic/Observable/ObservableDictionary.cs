@@ -16,12 +16,10 @@ public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IOb
 
 	private readonly Dictionary<TKey, TValue> mDictionary;
 
-#nullable enable
 	/// <summary>
 	/// Event is fired when the collection or one or more items in the collection changed.
 	/// </summary>
 	public event NotifyCollectionChangedEventHandler<KeyValuePair<TKey, TValue>>? CollectionChanged;
-#nullable disable
 
 	#endregion
 
@@ -31,15 +29,16 @@ public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IOb
 	/// Creates a new, empty dictionary.
 	/// </summary>
 	public ObservableDictionary()
-	{
-		mDictionary = new Dictionary<TKey, TValue>();
-	}
+    {
+        SerializationInfo = null!;
+        mDictionary = [];
+    }
 
-	/// <summary>
-	/// Creates a new dictionary, populated with the given collection of <see cref="KeyValuePair{TKey, TValue}"/>s
-	/// </summary>
-	/// <param name="collection">A collection of <see cref="KeyValuePair{TKey, TValue}"/>s</param>
-	public ObservableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection)
+    /// <summary>
+    /// Creates a new dictionary, populated with the given collection of <see cref="KeyValuePair{TKey, TValue}"/>s
+    /// </summary>
+    /// <param name="collection">A collection of <see cref="KeyValuePair{TKey, TValue}"/>s</param>
+    public ObservableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection) : this()
 	{
 		mDictionary = new Dictionary<TKey, TValue>(collection);
 	}
@@ -49,7 +48,7 @@ public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IOb
 	/// </summary>
 	/// <param name="serializationInfo">The <see cref="System.Runtime.Serialization.SerializationInfo"/></param>
 	/// <param name="streamingContext">The <see cref="System.Runtime.Serialization.StreamingContext"/></param>
-	public ObservableDictionary(SerializationInfo serializationInfo, StreamingContext streamingContext)
+	public ObservableDictionary(SerializationInfo serializationInfo, StreamingContext streamingContext) : this()
 	{
 		SerializationInfo = serializationInfo;
 		StreamingContext = streamingContext;

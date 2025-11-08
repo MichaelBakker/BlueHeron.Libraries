@@ -8,11 +8,11 @@ namespace BlueHeron.Collections.Generic;
 /// </summary>
 /// <typeparam name="TKey">The type of the key by which to sort items.</typeparam>
 /// <typeparam name="TValue">The type of the objects in the stack</typeparam>
-public class PrioritizedStack<TKey, TValue> : IPrioritizedCollection<TKey, TValue>
+public class PrioritizedStack<TKey, TValue> : IPrioritizedCollection<TKey, TValue> where TKey : notnull where TValue : notnull
 {
     #region Objects and variables
 
-    private readonly SortedDictionary<TKey, Stack<TValue>> mStacks = new();
+    private readonly SortedDictionary<TKey, Stack<TValue>> mStacks = [];
 
     #endregion
 
@@ -26,7 +26,7 @@ public class PrioritizedStack<TKey, TValue> : IPrioritizedCollection<TKey, TValu
     /// <summary>
     /// Determines whether there are one or more elements in the stack.
     /// </summary>
-    public bool HasElements => mStacks.Any();
+    public bool HasElements => mStacks.Count != 0;
 
     #endregion
 
@@ -40,9 +40,9 @@ public class PrioritizedStack<TKey, TValue> : IPrioritizedCollection<TKey, TValu
     public void Add(TKey priority, TValue value)
     {
         Stack<TValue> stack;
-        if (mStacks.ContainsKey(priority))
+        if (mStacks.TryGetValue(priority, out var value1))
         {
-            stack = mStacks[priority];
+            stack = value1;
         }
         else
         {
@@ -60,7 +60,7 @@ public class PrioritizedStack<TKey, TValue> : IPrioritizedCollection<TKey, TValu
     {
         if (!HasElements)
         {
-            return default;
+            return default!;
         }
 
         var pair = mStacks.First();

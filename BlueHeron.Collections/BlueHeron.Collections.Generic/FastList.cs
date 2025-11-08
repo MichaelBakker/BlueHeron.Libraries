@@ -19,7 +19,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 	#region Objects and variables
 
 	private const int mDefaultCapacity = 4;
-	private static readonly T[] mEmpty = Array.Empty<T>();
+	private static readonly T[] mEmpty = [];
 	private int mSize;
 
 	#endregion
@@ -193,7 +193,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 	/// If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the index of the first element that is larger than the value.
 	/// If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the index of the last element plus 1).
 	/// If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if the value is present in the list</returns>
-	public int BinarySearch(T item, IComparer<T> comparer)
+	public int BinarySearch(T item, IComparer<T>? comparer)
 	{
 		return BinarySearch(0, Count, item, comparer);
 	}
@@ -209,7 +209,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 	/// If value is not found and value is less than one or more elements in the list, the negative number returned is the bitwise complement of the index of the first element that is larger than the value.
 	/// If value is not found and value is greater than all elements in array, the negative number returned is the bitwise complement of (the index of the last element plus 1).
 	/// If this method is called with a non-sorted list, the return value can be incorrect and a negative number could be returned, even if the value is present in the list</returns>
-	public int BinarySearch(int index, int count, T item, IComparer<T> comparer)
+	public int BinarySearch(int index, int count, T item, IComparer<T>? comparer)
 	{
 		return Array.BinarySearch(Items, index, count, item, comparer);
 	}
@@ -325,7 +325,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 	/// </summary>
 	/// <param name="match">The <see cref="Predicate{T}"/> with which to find the item</param>
 	/// <returns>The item if it exists, else null</returns>
-	public T Find(Predicate<T> match)
+	public T? Find(Predicate<T> match)
 	{
 		for (var i = 0; i < mSize; i++)
 		{
@@ -407,7 +407,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 	/// </summary>
 	/// <param name="match">The <see cref="Predicate{T}"/> with which to find the item</param>
 	/// <returns>The item if it exists, else null</returns>
-	public T FindLast(Predicate<T> match)
+	public T? FindLast(Predicate<T> match)
 	{
 		for (var i = mSize - 1; i >= 0; i--)
 		{
@@ -637,7 +637,6 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 		{
 			Array.Clear(Items, newSize, mSize - newSize);
 		}
-
 		mSize = newSize;
 	}
 
@@ -750,7 +749,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 		{
 			Array.Copy(Items, index + 1, Items, index, mSize - index);
 		}
-		Items[mSize] = default;
+		Items[mSize] = default!;
 	}
 
 	/// <summary>
@@ -895,10 +894,9 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 	[StructLayout(LayoutKind.Sequential), DebuggerStepThrough()]
 	public struct Enumerator : IEnumerator<T>, IDisposable, IEnumerator, IAsyncEnumerator<T>, IAsyncDisposable
 	{
-		#region Objects and variables
+        #region Objects and variables
 
-		private T mCurrent;
-		private int mIndex;
+        private int mIndex;
 		private readonly FastList<T> mList;
 		private readonly CancellationToken? mToken;
 
@@ -915,38 +913,35 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 		{
 			mList = list;
 			mIndex = 0;
-			mCurrent = default;
+			Current = default!;
 			mToken = cancellationToken;
 		}
 
 		/// <summary>
 		/// Frees up resources held by this object (none).
 		/// </summary>
-		public void Dispose() { }
+		public readonly void Dispose() { }
 
 		/// <summary>
 		/// Frees up resources held by this object (none).
 		/// </summary>
 		/// <returns>A <see cref="ValueTask.CompletedTask"/></returns>
-		public ValueTask DisposeAsync()
-		{
-			return ValueTask.CompletedTask;
-		}
+		public readonly ValueTask DisposeAsync() => ValueTask.CompletedTask;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		/// <summary>
-		/// Gets the current item.
-		/// </summary>
-		public T Current => mCurrent;
+        /// <summary>
+        /// Gets the current item.
+        /// </summary>
+        public T Current { get; private set; }
 
-		/// <summary>
-		/// Gets the current item.
-		/// </summary>
-		[Obsolete]
-		object IEnumerator.Current => mCurrent;
+        /// <summary>
+        /// Gets the current item.
+        /// </summary>
+        [Obsolete]
+        readonly object IEnumerator.Current => Current ?? default!;
 
 		#endregion
 
@@ -960,7 +955,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 		{
 			if (mIndex < mList.mSize)
 			{
-				mCurrent = mList[mIndex];
+				Current = mList[mIndex];
 				mIndex++;
 				return true;
 			}
@@ -991,7 +986,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 		private bool MoveNextRare()
 		{
 			mIndex = mList.mSize + 1;
-			mCurrent = default;
+			Current = default!;
 			return false;
 		}
 
@@ -1001,7 +996,7 @@ public class FastList<T> : IList<T>, IReadOnlyList<T>, ICollection<T>, IEnumerab
 		void IEnumerator.Reset()
 		{
 			mIndex = 0;
-			mCurrent = default;
+			Current = default!;
 		}
 
 		#endregion

@@ -8,11 +8,11 @@ namespace BlueHeron.Collections.Generic;
 /// </summary>
 /// <typeparam name="TKey">The type of the key by which to sort items.</typeparam>
 /// <typeparam name="TValue">The type of the objects in the stack</typeparam>
-public class PrioritizedQueue<TKey, TValue> : IPrioritizedCollection<TKey, TValue>
+public class PrioritizedQueue<TKey, TValue> : IPrioritizedCollection<TKey, TValue> where TKey : notnull where TValue : notnull
 {
     #region Objects and variables
 
-    private readonly SortedDictionary<TKey, Queue<TValue>> mQueues = new();
+    private readonly SortedDictionary<TKey, Queue<TValue>> mQueues = [];
 
     #endregion
 
@@ -26,7 +26,7 @@ public class PrioritizedQueue<TKey, TValue> : IPrioritizedCollection<TKey, TValu
     /// <summary>
     /// Determines whether there are one or more elements in the queue.
     /// </summary>
-    public bool HasElements => mQueues.Any();
+    public bool HasElements => mQueues.Count != 0;
 
     #endregion
 
@@ -40,9 +40,9 @@ public class PrioritizedQueue<TKey, TValue> : IPrioritizedCollection<TKey, TValu
     public void Add(TKey priority, TValue value)
     {
         Queue<TValue> queue;
-        if (mQueues.ContainsKey(priority))
+        if (mQueues.TryGetValue(priority, out var value1))
         {
-            queue = mQueues[priority];
+            queue = value1;
         }
         else
         {
@@ -60,7 +60,7 @@ public class PrioritizedQueue<TKey, TValue> : IPrioritizedCollection<TKey, TValu
     {
         if (!HasElements)
         {
-            return default;
+            return default!;
         }
 
         var pair = mQueues.First();
@@ -70,7 +70,6 @@ public class PrioritizedQueue<TKey, TValue> : IPrioritizedCollection<TKey, TValu
         {
             mQueues.Remove(pair.Key);
         }
-
         return value;
     }
 

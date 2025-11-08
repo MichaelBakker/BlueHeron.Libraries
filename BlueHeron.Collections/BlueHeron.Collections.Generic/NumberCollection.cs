@@ -15,7 +15,6 @@ public sealed class NumberCollection<T> : FastList<T> where T : INumber<T>
     #region Objects and variables
 
     private const char _SPACE = ' ';
-    private const string fmtToString = "{0:{{1}}}";
 
     #endregion
 
@@ -66,7 +65,7 @@ public sealed class NumberCollection<T> : FastList<T> where T : INumber<T>
     /// <param name="format">The format in which to parse values</param>
     /// <param name="provider">The <see cref="IFormatProvider"/> to use</param>
     /// <returns>A <see cref="string"/></returns>
-    public new string ToString(string format, IFormatProvider provider)
+    public new string ToString(string format, IFormatProvider? provider)
     {
         if (Count == 0)
         {
@@ -76,7 +75,7 @@ public sealed class NumberCollection<T> : FastList<T> where T : INumber<T>
         var str = new StringBuilder();
         for (var i = 0; i < Count; i++)
         {
-            str.AppendFormat(provider, fmtToString, this[i], format);
+            str.AppendFormat(provider, $"{{0:{format}}}", this[i]);
             if (i != Count - 1)
             {
                 str.Append(_SPACE);

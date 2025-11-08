@@ -16,12 +16,10 @@ public delegate void NotifyCollectionChangedEventHandler<T>(in NotifyCollectionC
 /// <typeparam name="T">The type of the object in the collection</typeparam>
 public interface IObservableCollection<T> : IReadOnlyCollection<T>
 {
-#nullable enable
     /// <summary>
     /// Event is fired when the collection has changed or when an item in the collection has changed.
     /// </summary>
     event NotifyCollectionChangedEventHandler<T>? CollectionChanged;
-#nullable disable
 
     /// <summary>
     /// Object, needed to ensure thread safety.

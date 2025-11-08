@@ -7,13 +7,18 @@ namespace BlueHeron.Collections.Generic;
 /// Object that is able to create and store a pool of objects.
 /// </summary>
 /// <typeparam name="T">The type of the objects in the pool</typeparam>
-public sealed class ObjectPool<T>
+/// <remarks>
+/// Creates a new ObjectPool.
+/// </remarks>
+/// <param name="objectGenerator">The <see cref="Func{T}"/> that creates the object of type <typeparamref name="T"/></param>
+/// <param name="maxCapacity">The capacity of the pool</param>
+/// <exception cref="ArgumentNullException">Parameter objectGenerator cannot be null</exception>
+public sealed class ObjectPool<T>(Func<T> objectGenerator, int maxCapacity = int.MaxValue / 2)
 {
     #region Objects and variables
 
-    private readonly ConcurrentBag<T> mObjects;
-    private readonly Func<T> mObjectGenerator;
-    private readonly int mMaxCapacity;
+    private readonly ConcurrentBag<T> mObjects = [];
+    private readonly Func<T> mObjectGenerator = objectGenerator ?? throw new ArgumentNullException(nameof(objectGenerator));
 
     #endregion
 
@@ -23,23 +28,6 @@ public sealed class ObjectPool<T>
     /// Returns the number of objects in the pool.
     /// </summary>
     public int Count => mObjects.Count;
-
-    #endregion
-
-    #region Construction
-
-    /// <summary>
-    /// Creates a new ObjectPool.
-    /// </summary>
-    /// <param name="objectGenerator">The <see cref="Func{T}"/> that creates the object of type <typeparamref name="T"/></param>
-    /// <param name="maxCapacity">The capacity of the pool</param>
-    /// <exception cref="ArgumentNullException">Parameter objectGenerator cannot be null</exception>
-    public ObjectPool(Func<T> objectGenerator, int maxCapacity = int.MaxValue / 2)
-    {
-        mObjectGenerator = objectGenerator ?? throw new ArgumentNullException(nameof(objectGenerator));
-        mObjects = new ConcurrentBag<T>();
-        mMaxCapacity = maxCapacity;
-    }
 
     #endregion
 
@@ -64,7 +52,7 @@ public sealed class ObjectPool<T>
     /// <param name="item">The object to store</param>
     public void Set(T item)
     {
-        if (Count < mMaxCapacity)
+        if (Count < maxCapacity)
         {
             mObjects.Add(item);
         }
