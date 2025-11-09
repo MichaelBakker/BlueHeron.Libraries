@@ -3,9 +3,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0130:Convert to file-scoped namespace", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron")]
-[assembly: SuppressMessage("Style", "IDE0130:Convert to file-scoped namespace", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron.Collections")]
-[assembly: SuppressMessage("Style", "IDE0130:Convert to file-scoped namespace", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron.Collections.Generic")]
-[assembly: SuppressMessage("Style", "IDE0161:Convert to file-scoped namespace", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron")]
-[assembly: SuppressMessage("Style", "IDE0161:Convert to file-scoped namespace", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron.Collections")]
-[assembly: SuppressMessage("Style", "IDE0161:Convert to file-scoped namespace", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron.Collections.Generic")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron.Collections")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "Group files by type or category", Scope = "namespace", Target = "~N:BlueHeron.Collections.Generic")]
