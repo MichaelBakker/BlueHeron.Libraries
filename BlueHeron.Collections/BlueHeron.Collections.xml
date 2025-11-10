@@ -210,6 +210,13 @@
             </summary>
             <param name="instance">Instance of the object to extend</param>
         </member>
+        <member name="M:BlueHeron.Collections.Generic.Extendo.GetProperties(System.Boolean)">
+            <summary>
+            Returns all properties.
+            </summary>
+            <param name="includeInstanceProperties">If true, include fields of the Exptendo based object itself</param>
+            <returns>A collection of <see cref="T:System.Collections.Generic.KeyValuePair`2"/>s</returns>
+        </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)">
             <summary>
             Tries to retrieve a member by name first from instance properties followed by the collection entries.
@@ -234,13 +241,6 @@
             <param name="binder">The <see cref="T:System.Dynamic.SetMemberBinder"/></param>
             <param name="value">The value to set</param>
             <returns>Boolean, true if the operation was successful</returns>
-        </member>
-        <member name="M:BlueHeron.Collections.Generic.Extendo.GetProperties(System.Boolean)">
-            <summary>
-            Returns all properties.
-            </summary>
-            <param name="includeInstanceProperties">If true, include fields of the Exptendo based object itself</param>
-            <returns>A collection of <see cref="T:System.Collections.Generic.KeyValuePair`2"/>s</returns>
         </member>
         <member name="M:BlueHeron.Collections.Generic.Extendo.GetProperty(System.Object,System.String,System.Object@)">
             <summary>

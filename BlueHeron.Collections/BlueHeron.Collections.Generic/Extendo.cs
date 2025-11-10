@@ -184,6 +184,26 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
     }
 
     /// <summary>
+    /// Returns all properties.
+    /// </summary>
+    /// <param name="includeInstanceProperties">If true, include fields of the Exptendo based object itself</param>
+    /// <returns>A collection of <see cref="KeyValuePair{String, Object}"/>s</returns>
+    public IEnumerable<KeyValuePair<string, object?>> GetProperties(bool includeInstanceProperties = false)
+    {
+        if (includeInstanceProperties && InstancePropertyInfo != null)
+        {
+            foreach (var prop in InstancePropertyInfo)
+            {
+                yield return new KeyValuePair<string, object?>(prop.Name, prop.GetValue(mInstance, null));
+            }
+        }
+        foreach (var key in Properties.Keys)
+        {
+            yield return new KeyValuePair<string, object?>(key, Properties[key]);
+        }
+    }
+
+    /// <summary>
     /// Tries to retrieve a member by name first from instance properties followed by the collection entries.
     /// </summary>
     /// <param name="binder">The <see cref="GetMemberBinder"/></param>
@@ -259,26 +279,6 @@ public class Extendo : DynamicObject, IDynamicMetaObjectProvider
     #endregion
 
     #region Private methods and functions
-
-    /// <summary>
-    /// Returns all properties.
-    /// </summary>
-    /// <param name="includeInstanceProperties">If true, include fields of the Exptendo based object itself</param>
-    /// <returns>A collection of <see cref="KeyValuePair{String, Object}"/>s</returns>
-    public IEnumerable<KeyValuePair<string, object?>> GetProperties(bool includeInstanceProperties = false)
-	{
-		if (includeInstanceProperties && InstancePropertyInfo != null)
-		{
-			foreach (var prop in InstancePropertyInfo)
-			{
-				yield return new KeyValuePair<string, object?>(prop.Name, prop.GetValue(mInstance, null));
-			}
-		}
-		foreach (var key in Properties.Keys)
-		{
-			yield return new KeyValuePair<string, object?>(key, Properties[key]);
-		}
-	}
 
 	/// <summary>
 	/// Reflection Helper method to retrieve a property.
