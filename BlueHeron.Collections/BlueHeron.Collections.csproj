@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>BlueHeron</RootNamespace>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>bb.snk</AssemblyOriginatorKeyFile>
 		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
@@ -65,6 +65,6 @@
 	  <IsAotCompatible>False</IsAotCompatible>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="System.Linq.Async" Version="6.0.3" />
+	  <PackageReference Include="System.Linq.Async" Version="7.0.0" />
 	</ItemGroup>
 </Project>
